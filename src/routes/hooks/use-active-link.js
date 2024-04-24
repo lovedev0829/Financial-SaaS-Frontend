@@ -1,17 +1,13 @@
-import { usePathname } from 'next/navigation';
+import { matchPath, useLocation } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export function useActiveLink(path, deep = true) {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
 
-  const checkPath = path.startsWith('#');
+  const normalActive = path ? !!matchPath({ path, end: true }, pathname) : false;
 
-  const currentPath = path === '/' ? '/' : `${path}/`;
-
-  const normalActive = !checkPath && pathname === currentPath;
-
-  const deepActive = !checkPath && pathname.includes(currentPath);
+  const deepActive = path ? !!matchPath({ path, end: false }, pathname) : false;
 
   return deep ? deepActive : normalActive;
 }

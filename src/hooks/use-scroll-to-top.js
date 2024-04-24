@@ -1,10 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-export function usePathname() {
+export function useScrollToTop() {
   const { pathname } = useLocation();
 
-  return useMemo(() => pathname, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
 }
