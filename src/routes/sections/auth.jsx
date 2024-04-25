@@ -11,6 +11,7 @@ import { SplashScreen } from 'src/components/loading-screen';
 // JWT
 const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 const JwtRegisterPage = lazy(() => import('src/pages/auth/jwt/register'));
+const SelectProfile = lazy(() => import('src/pages/auth/selectProfile'));
 
 // ----------------------------------------------------------------------
 
@@ -45,9 +46,20 @@ const authJwt = {
   ],
 };
 
+const authProfile = {
+    path: 'profile',
+    element: (
+      <GuestGuard>
+        <AuthClassicLayout>
+          <SelectProfile />
+        </AuthClassicLayout>
+      </GuestGuard>
+    ),
+}
+
 export const authRoutes = [
   {
     path: 'auth',
-    children: [authJwt],
+    children: [authJwt, authProfile],
   },
 ];

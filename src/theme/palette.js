@@ -13,7 +13,7 @@ export const grey = {
   500: '#919EAB',
   600: '#637381',
   700: '#454F5B',
-  800: '#212B36',
+  800: '#7E7F90',
   900: '#161C24',
 };
 
@@ -47,7 +47,7 @@ export const info = {
 export const success = {
   lighter: '#D3FCD2',
   light: '#77ED8B',
-  main: '#22C55E',
+  main: '#69ADFF',
   dark: '#118D57',
   darker: '#065E49',
   contrastText: '#ffffff',
