@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 
 import Step from '@mui/material/Step';
-import Radio from '@mui/material/Radio';
 import Stepper from '@mui/material/Stepper';
 import { styled } from '@mui/material/styles';
 import StepLabel from '@mui/material/StepLabel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 
 const STEPS = ['Select Profile', 'Register', 'Confirmation'];
@@ -44,13 +45,13 @@ const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
 
 function QontoStepIcon(props) {
   const { active, completed, className } = props;
-
+  console.log(props);
   return (
     <QontoStepIconRoot ownerState={{ active }} className={className}>
       {completed ? (
-        <Radio size="medium" checked />
+        <CheckCircleIcon color='primary' />
       ) : (
-        <Radio size="medium" disabled />
+        <RadioButtonCheckedIcon />
       )}
     </QontoStepIconRoot>
   );
@@ -64,12 +65,12 @@ QontoStepIcon.propTypes = {
 
 
 export default function CustomizedSteppers(props) {
-  const { activeStep, step } = props;
+  const { activeStep } = props;
 
   return (
-      <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
+      <Stepper alternativeLabel activeStep={activeStep}  connector={<QontoConnector />}>
         {STEPS.map((label) => (
-          <Step key={label}>
+          <Step key={label} >
             <StepLabel StepIconComponent={QontoStepIcon} >{label}</StepLabel>
           </Step>
         ))}
@@ -77,8 +78,6 @@ export default function CustomizedSteppers(props) {
   );
 }
 
-
 CustomizedSteppers.propTypes = {
-  activeStep: PropTypes.string.isRequired,
-  step: PropTypes.string.isRequired
+  activeStep: PropTypes.number.isRequired
 }

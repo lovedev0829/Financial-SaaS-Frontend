@@ -16,6 +16,7 @@ export const paths = {
       register: `${ROOTS.AUTH}/jwt/register`,
     },
     selectProfile: `${ROOTS.AUTH}/profile`,
+    confirmProfile: `${ROOTS.AUTH}/confirm`,
   },
   // DASHBOARD
   dashboard: {

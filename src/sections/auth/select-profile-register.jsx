@@ -4,8 +4,10 @@ import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Radio from '@mui/material/Radio';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import Snackbar from '@mui/material/Snackbar';
 import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -38,7 +40,7 @@ export default function SelectProfileView() {
   const router = useRouter();
   const [issuer, setIssuer]  = useState(false);
   const [distributor, setDistributor]  = useState(false);
-  
+  const [profileAlert, setProfileAlert] = useState(false);
   const handleChange = (event) => {
       if(event.target.value === 'issuer') {
          setDistributor(false);
@@ -53,14 +55,14 @@ export default function SelectProfileView() {
       if(issuer === true || distributor === true){
          router.push(paths.auth.jwt.register)
       } else {
-         alert('choose one')
+         setProfileAlert(true);
       }
   }
 
   return (
    <>
       <Stack spacing={10} >
-         <CustomizedSteppers activeStep={1} step="select_profile" />
+         <CustomizedSteppers activeStep={0} />
          <Stack spacing={3.5}>
                <Stack spacing={2} sx={{ mb: 5, position: 'relative' }} alignItems='center'>
                <Typography variant="h4">Select Profile</Typography>
@@ -105,6 +107,15 @@ export default function SelectProfileView() {
             Next
          </Button>
       </Stack>
+      <Snackbar open={profileAlert}   autoHideDuration={1200} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
+        <Alert
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Please choose profile you wanna register
+        </Alert>
+      </Snackbar>
    </>
   );
 }

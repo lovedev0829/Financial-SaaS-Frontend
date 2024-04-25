@@ -1,167 +1,214 @@
-import * as Yup from 'yup';
-import { useState } from 'react';
+
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
-import { useRouter, useSearchParams } from 'src/routes/hooks';
 
-import { useBoolean } from 'src/hooks/use-boolean';
+import FormProvider, {
+   RHFTextField,
+ } from 'src/components/hook-form';
+import CustomizedSteppers from 'src/components/stepper-view/customized-steppers';
 
-import { useAuthContext } from 'src/auth/hooks';
-import { PATH_AFTER_LOGIN } from 'src/config-global';
+import { FormSchema } from './schema';
 
-import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
+export const defaultValues = {
+   firstName: '',
+   lastName: '',
+   callPhone: '',
+   company: '',
+   email: '',
+   confirmEmail: '',
+   site: '',
+   message: '',
+ };
+
+export default function JwtRegisterView() {
+   const router = useRouter();
+   
+   const methods = useForm({
+      resolver: yupResolver(FormSchema),
+      defaultValues,
+    });
+
+   const handleNextStep = (e) => {
+      e.preventDefault()
+      router.push(paths.auth.confirmProfile);
+   }
+   const loginRouter = (e) => {
+      e.preventDefault()
+      router.push(paths.auth.jwt.login);
+   }
+  return (
+   <Stack spacing={10} >
+         <CustomizedSteppers activeStep={1} />
+         <Stack spacing={3.5}>
+               <Stack spacing={2} sx={{ mb: 1, position: 'relative' }} alignItems='center'>
+                  <Typography variant="h4">Register</Typography>
+                  <Typography>Submit your details</Typography>
+               </Stack>
+              <FormProvider methods={methods}>
+               <Stack spacing={10} sx={{ width: 1, mb: 2 }} direction='row'  >
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        First Name
+                     </Typography>
+                     <RHFTextField name="firstname" 
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><PermIdentityIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Last Name
+                     </Typography>
+                     <RHFTextField name="lastname" 
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><PermIdentityIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+               </Stack>
+               <Stack spacing={10} sx={{ width: 1, mb: 2 }} direction='row'>
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Call Phone
+                     </Typography>
+                     <RHFTextField name="callphone"
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><LocalPhoneOutlinedIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Company
+                     </Typography>
+                     <RHFTextField name="company"  InputProps={{
+                           startAdornment: <InputAdornment position="start"><BusinessOutlinedIcon/></InputAdornment>,
+                        }} />
+                  </Block>
+               </Stack>
+               <Stack spacing={10} sx={{ width: 1, mb: 2 }} direction='row'>
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Email
+                     </Typography>
+                     <RHFTextField name="email"
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><MailOutlinedIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Confirm Email
+                     </Typography>
+                     <RHFTextField name="confirmEmail" 
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><MailOutlinedIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+               </Stack>
+               <Stack sx={{ width: 1, mb: 2 }} >
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Site
+                     </Typography>
+                     <RHFTextField name="site" 
+                        InputProps={{
+                           startAdornment: <InputAdornment position="start"><LanguageOutlinedIcon/></InputAdornment>,
+                        }}
+                     />
+                  </Block>
+               </Stack>
+               <Stack sx={{ width: 1, mb: 2 }} >
+                  <Block>
+                     <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                        Message
+                     </Typography>
+                     <RHFTextField name="message"
+                        multiline
+                        rows={6}
+                     />
+                  </Block>
+               </Stack>
+               <Stack direction='row' alignItems='center' gap={1}>
+                  <Checkbox size="medium" />
+                  <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                     I confirm that i have read and understood the platform’s
+                  </Typography>
+                  <Link style={{color: '#69ADFF'}}>Terms of use</Link>
+                  <Typography variant="caption" sx={{ color: 'text.disabled', fontSize: "15px"}} >
+                     and
+                  </Typography>
+                  <Link style={{color: '#69ADFF'}}>privacy policy</Link>
+               </Stack>
+               <Stack direction='row' alignItems='center' gap={1}>
+                  <Checkbox size="medium" />
+                  <Typography variant="caption" sx={{ textAlign: 'left', color: 'text.disabled', fontSize: "15px"}} >
+                     Lorem ipsum dolor sit amet, consectetur adipiscing  and
+                  </Typography>
+               </Stack>
+               <Stack sx={{ marginLeft:"1px", marginTop:"20px" }} >
+                  <ReCAPTCHA
+                  theme='light'
+                  sitekey="Your client site key"
+                  />
+               </Stack>
+               <Stack direction='row' gap={25} sx={{ justifyContent:'space-between', alignItems: 'center', mt: 2 }}>
+                     <Stack direction='row' gap={1}>
+                        <Typography>Already have an account ?</Typography>
+                        <Link component={RouterLink} onClick={loginRouter} variant="subtitle2" color="primary">
+                           Login
+                        </Link>
+                     </Stack>
+                     <Stack direction='row' gap={2}>
+                        <Button variant="outlined" color="primary" endIcon={<ArrowBackOutlinedIcon/>} sx={{justifyContent: 'unset'}} onClick={ router.back } />
+                        <Button  size="large" variant="contained" color="primary" endIcon={<ArrowRightAltIcon/>} style={{ width: "120px" }} onClick={handleNextStep}>
+                           Next
+                        </Button>
+                     </Stack>
+               </Stack>
+              </FormProvider>
+              
+         </Stack>
+      </Stack>
+  );
+}
 
 // ----------------------------------------------------------------------
 
-export default function JwtRegisterView() {
-  const { register } = useAuthContext();
-
-  const router = useRouter();
-
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const searchParams = useSearchParams();
-
-  const returnTo = searchParams.get('returnTo');
-
-  const password = useBoolean();
-
-  const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
-  });
-
-  const defaultValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  };
-
-  const methods = useForm({
-    resolver: yupResolver(RegisterSchema),
-    defaultValues,
-  });
-
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
-
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      await register?.(data.email, data.password, data.firstName, data.lastName);
-
-      router.push(returnTo || PATH_AFTER_LOGIN);
-    } catch (error) {
-      console.error(error);
-      reset();
-      setErrorMsg(typeof error === 'string' ? error : error.message);
-    }
-  });
-
-  const renderHead = (
-    <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-      <Typography variant="h4">Register</Typography>
-      <Typography>Submit your details</Typography>
-    </Stack>
-  );
-
-  const renderTerms = (
-    <Typography
-      component="div"
-      sx={{
-        mt: 2.5,
-        textAlign: 'center',
-        typography: 'caption',
-        color: 'text.secondary',
-      }}
-    >
-      {'By signing up, I agree to '}
-      <Link underline="always" color="text.primary">
-        Terms of Service
-      </Link>
-      {' and '}
-      <Link underline="always" color="text.primary">
-        Privacy Policy
-      </Link>
-      .
-    </Typography>
-  );
-
-  const renderForm = (
-    <Stack spacing={2.5}>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        <RHFTextField name="firstName" label="First name" />
-        <RHFTextField name="lastName" label="Last name" />
-      </Stack>
-
-      <RHFTextField name="email" label="Email address" />
-
-      <RHFTextField
-        name="password"
-        label="Password"
-        type={password.value ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={password.onToggle} edge="end">
-                <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-
-      <Stack direction="row" spacing={0.5}>
-        <Typography variant="body2"> Already have an account? </Typography>
-        <Link href={paths.auth.jwt.login} component={RouterLink} variant="subtitle2">
-          Sign in
-        </Link>
-        <LoadingButton
-          fullWidth
-          color="inherit"
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-        >
-          Create account
-        </LoadingButton>
-      </Stack>
-    </Stack>
-  );
-
-  return (
-    <>
-      {renderHead}
-
-      {!!errorMsg && (
-        <Alert severity="error" sx={{ m: 3 }}>
-          {errorMsg}
-        </Alert>
-      )}
-
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        {renderForm}
-      </FormProvider>
-
-      {renderTerms}
-    </>
-  );
-}
+function Block({ sx, children }) {
+   return (
+     <Stack spacing={1} sx={{ width: 1, ...sx }}>
+       {children}
+     </Stack>
+   );
+ }
+ 
+ 
+ 
+Block.propTypes = {
+   children: PropTypes.node,
+   sx: PropTypes.object,
+};

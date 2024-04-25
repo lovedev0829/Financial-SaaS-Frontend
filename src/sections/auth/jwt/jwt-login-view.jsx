@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Link from '@mui/material/Link';
@@ -10,7 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
-import ReCAPTCHA from "react-google-recaptcha";
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
