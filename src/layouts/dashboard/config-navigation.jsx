@@ -1,80 +1,109 @@
 import { useMemo } from 'react';
 
+import PeopleIcon from '@mui/icons-material/People';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Person2Icon from '@mui/icons-material/Person2';
+import SettingsIcon from '@mui/icons-material/Settings';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import EscalatorIcon from '@mui/icons-material/Escalator';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+
 import { paths } from 'src/routes/paths';
 
-import SvgColor from 'src/components/svg-color';
-
-// ----------------------------------------------------------------------
-
-const icon = (name) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
-  // OR
-  // <Iconify icon="fluent:mail-24-filled" />
-  // https://icon-sets.iconify.design/solar/
-  // https://www.streamlinehq.com/icons
-);
-
 const ICONS = {
-  job: icon('ic_job'),
-  blog: icon('ic_blog'),
-  chat: icon('ic_chat'),
-  mail: icon('ic_mail'),
-  user: icon('ic_user'),
-  file: icon('ic_file'),
-  lock: icon('ic_lock'),
-  tour: icon('ic_tour'),
-  order: icon('ic_order'),
-  label: icon('ic_label'),
-  blank: icon('ic_blank'),
-  kanban: icon('ic_kanban'),
-  folder: icon('ic_folder'),
-  banking: icon('ic_banking'),
-  booking: icon('ic_booking'),
-  invoice: icon('ic_invoice'),
-  product: icon('ic_product'),
-  calendar: icon('ic_calendar'),
-  disabled: icon('ic_disabled'),
-  external: icon('ic_external'),
-  menuItem: icon('ic_menu_item'),
-  ecommerce: icon('ic_ecommerce'),
-  analytics: icon('ic_analytics'),
-  dashboard: icon('ic_dashboard'),
-};
+  dashboard: <DashboardIcon/>,
+  analysis: <InsertChartIcon/>,
+  issuanceRegister: <EscalatorIcon />,
+  distributorRegister: <AccountTreeIcon />,
+  issuanceRrouter:<InventoryIcon />,
+  issuanceTracking: <MonitorHeartIcon />,
+  manageUsers: <PeopleIcon/>,
+  profile: <Person2Icon />,
+  setting:<SettingsIcon/>,
+  customer:<SupportAgentIcon/>,
+  logout: <LogoutIcon />
 
-// ----------------------------------------------------------------------
+};
 
 export function useNavData() {
   const data = useMemo(
     () => [
-      // OVERVIEW
-      // ----------------------------------------------------------------------
+
+      // General
       {
-        subheader: 'overview v5.7.0',
+        subheader: 'GENERAL',
         items: [
-          { title: 'one', path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: 'two', path: paths.dashboard.two, icon: ICONS.ecommerce },
-          {
-            title: 'three',
-            path: paths.dashboard.three,
-            icon: ICONS.analytics,
-          },
+          { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
+          { title: 'Analysis and Reports', path: paths.dashboard.analysis, icon: ICONS.analysis },
         ],
       },
 
-      // MANAGEMENT
-      // ----------------------------------------------------------------------
+      // Basic REGISTRATION
       {
-        subheader: 'management',
+        subheader: 'Basic REGISTRATION',
         items: [
           {
-            title: 'user',
-            path: paths.dashboard.group.root,
-            icon: ICONS.user,
-            children: [
-              { title: 'four', path: paths.dashboard.group.root },
-              { title: 'five', path: paths.dashboard.group.five },
-              { title: 'six', path: paths.dashboard.group.six },
-            ],
+            title: 'Issuance Registration',
+            path: paths.dashboard.issuance.register,
+            icon: ICONS.issuanceRegister,
+          },
+          {
+            title: 'Distributor Registration',
+            path: paths.dashboard.distributor.register,
+            icon: ICONS.distributorRegister,
+          }
+        ],
+      },
+      
+       // Workflow
+       {
+        subheader: 'WORKFLOW',
+        items: [
+          {
+            title: 'Issuance Router',
+            path: paths.dashboard.issuance.router,
+            icon: ICONS.issuanceRrouter,
+          },
+          {
+            title: 'Issuance Tracking',
+            path: paths.dashboard.issuance.track,
+            icon: ICONS.issuanceTracking,
+          }
+        ],
+      },
+       // Workflow
+       {
+        subheader: 'USERS SETTINGS',
+        items: [
+          {
+            title: 'Manage Users',
+            path: paths.dashboard.user,
+            icon: ICONS.manageUsers ,
+          },
+        ],
+      },
+      // My account
+      {
+        subheader: 'MY ACCOUNT',
+        items: [
+          {
+            title: 'Profile',
+            path: paths.dashboard.profile,
+            icon: ICONS.profile,
+          },
+          {
+            title: 'Settings',
+            path: paths.dashboard.settings,
+            icon: ICONS.setting,
+          },
+          {
+            title: 'Customer Support',
+            path: paths.dashboard.customer,
+            icon: ICONS.customer,
           },
         ],
       },

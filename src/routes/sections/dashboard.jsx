@@ -8,12 +8,16 @@ import { LoadingScreen } from 'src/components/loading-screen';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const PageTwo = lazy(() => import('src/pages/dashboard/two'));
-const PageThree = lazy(() => import('src/pages/dashboard/three'));
-const PageFour = lazy(() => import('src/pages/dashboard/four'));
-const PageFive = lazy(() => import('src/pages/dashboard/five'));
-const PageSix = lazy(() => import('src/pages/dashboard/six'));
+const IndexPage = lazy(() => import('src/pages/dashboard/index'));
+const Analysis = lazy(() => import('src/pages/dashboard/analysis'));
+const IssuanceRegsiter = lazy(() => import('src/pages/issuance/register'));
+const IssuanceRouter = lazy(() => import('src/pages/issuance/router'));
+const IssuanceTrack = lazy(() => import('src/pages/issuance/track'));
+const DistributorRegister = lazy(() => import('src/pages/distributor/register'));
+const User = lazy(() => import('src/pages/user/index'));
+const Profile = lazy(() => import('src/pages/profile/index'));
+const Setting = lazy(() => import('src/pages/setting/index'));
+const Customer = lazy(() => import('src/pages/customer/index'));
 
 // ----------------------------------------------------------------------
 
@@ -31,16 +35,25 @@ export const dashboardRoutes = [
     ),
     children: [
       { element: <IndexPage />, index: true },
-      { path: 'two', element: <PageTwo /> },
-      { path: 'three', element: <PageThree /> },
+      { path: 'analysis', element: <Analysis /> },
       {
-        path: 'group',
+        path: 'issuance',
         children: [
-          { element: <PageFour />, index: true },
-          { path: 'five', element: <PageFive /> },
-          { path: 'six', element: <PageSix /> },
+          { path: 'register', element: <IssuanceRegsiter /> },
+          { path: 'router', element: <IssuanceRouter /> },
+          { path: 'track', element: <IssuanceTrack /> },
         ],
       },
+      {
+        path: 'distributor',
+        children: [
+          { path: 'register', element: <DistributorRegister /> },
+        ],
+      },
+      { path: 'user', element: <User /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'settings', element: <Setting /> },
+      { path: 'customer', element: <Customer /> },
     ],
   },
 ];

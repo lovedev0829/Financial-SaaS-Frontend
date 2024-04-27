@@ -8,7 +8,6 @@ const ROOTS = {
 // ----------------------------------------------------------------------
 
 export const paths = {
-  minimalUI: 'https://mui.com/store/items/minimal-dashboard/',
   // AUTH
   auth: {
     jwt: {
@@ -22,13 +21,18 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
-    one: `${ROOTS.DASHBOARD}/one`,
-    two: `${ROOTS.DASHBOARD}/two`,
-    three: `${ROOTS.DASHBOARD}/three`,
-    group: {
-      root: `${ROOTS.DASHBOARD}/group`,
-      five: `${ROOTS.DASHBOARD}/group/five`,
-      six: `${ROOTS.DASHBOARD}/group/six`,
+    analysis: `${ROOTS.DASHBOARD}/analysis`,
+    issuance: {
+      register: `${ROOTS.DASHBOARD}/issuance/register`,
+      router: `${ROOTS.DASHBOARD}/issuance/router`,
+      track: `${ROOTS.DASHBOARD}/issuance/track`,
     },
+    distributor: {
+      register: `${ROOTS.DASHBOARD}/distributor/register`,
+    },
+    user: `${ROOTS.DASHBOARD}/user`,
+    profile: `${ROOTS.DASHBOARD}/profile`,
+    settings: `${ROOTS.DASHBOARD}/settings`,
+    customer: `${ROOTS.DASHBOARD}/customer`,
   },
 };
