@@ -13,6 +13,7 @@ const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
 const JwtRegisterPage = lazy(() => import('src/pages/auth/jwt/register'));
 const SelectProfile = lazy(() => import('src/pages/auth/selectProfile'));
 const ConfirmProfile = lazy(() => import('src/pages/auth/confirmProfile'));
+const ConfirmRegister = lazy(() => import('src/pages/auth/confirmRegsiter'));
 
 // ----------------------------------------------------------------------
 
@@ -28,8 +29,8 @@ const authJwt = {
       path: 'login',
       element: (
         <GuestGuard>
-          <AuthClassicLayout>
-            <JwtLoginPage />
+          <AuthClassicLayout  frmMaxWith={600}>
+            <JwtLoginPage  />
           </AuthClassicLayout>
         </GuestGuard>
       ),
@@ -38,8 +39,8 @@ const authJwt = {
       path: 'register',
       element: (
         <GuestGuard>
-          <AuthClassicLayout title="Manage the job more effectively with Minimal">
-            <JwtRegisterPage />
+          <AuthClassicLayout frmMaxWith={900}>
+            <JwtRegisterPage  />
           </AuthClassicLayout>
         </GuestGuard>
       ),
@@ -51,27 +52,40 @@ const authProfile = {
     path: 'profile',
     element: (
       <GuestGuard>
-        <AuthClassicLayout>
-          <SelectProfile />
+        <AuthClassicLayout frmMaxWith={800}>
+          <SelectProfile/>
         </AuthClassicLayout>
       </GuestGuard>
     ),
 }
-const confirmProfile = {
+
+const confirmRoutes = {
   path: 'confirm',
   element: (
     <GuestGuard>
-      <AuthClassicLayout>
-        <ConfirmProfile />
+      <AuthClassicLayout frmMaxWith={950}>
+        <Outlet />
       </AuthClassicLayout>
     </GuestGuard>
   ),
-}
+  children: [
+    // Index route for rendering ConfirmProfile at "/confirm"
+    {
+      index: true,
+      element: <ConfirmProfile />,
+    },
+    // Nested route for rendering JwtRegisterPage at "/confirm/register"
+    {
+      path: 'register',
+      element: <ConfirmRegister />,
+    },
+  ],
+};
 
 
 export const authRoutes = [
   {
     path: 'auth',
-    children: [authJwt, authProfile, confirmProfile],
+    children: [authJwt, authProfile, confirmRoutes],
   },
 ];

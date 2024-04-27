@@ -17,6 +17,7 @@ export const paths = {
     },
     selectProfile: `${ROOTS.AUTH}/profile`,
     confirmProfile: `${ROOTS.AUTH}/confirm`,
+    confirmRegister: `${ROOTS.AUTH}/confirm/register`,
   },
   // DASHBOARD
   dashboard: {

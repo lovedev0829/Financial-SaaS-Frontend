@@ -30,8 +30,7 @@ const inactiveStyle = {
 const StyledBox = styled(Box)({
   borderRadius: '12px',
   width: "300px",
-  padding: '12px',
-  justifyContent: 'left',
+  padding: '15px',
   '&:hover': { activeStyle },
 });
 
@@ -63,7 +62,7 @@ export default function SelectProfileView() {
    <>
       <Stack spacing={10} >
          <CustomizedSteppers activeStep={0} />
-         <Stack spacing={3.5}>
+         <Stack spacing={3.5} alignItems="center">
                <Stack spacing={2} sx={{ mb: 5, position: 'relative' }} alignItems='center'>
                <Typography variant="h4">Select Profile</Typography>
                <Typography>Choose your profile from below</Typography>
@@ -96,7 +95,7 @@ export default function SelectProfileView() {
                </Stack>
          </Stack>
       </Stack>
-      <Stack position='absolute' style={{bottom:100}} direction='row' gap={30} alignItems="baseline">
+      <Stack  direction='row' justifyContent='space-between' mt={30} alignItems='baseline'>
          <Stack direction='row' gap={1}>
             <Typography>Already have an account ?</Typography>
             <Link component={RouterLink} href={paths.auth.jwt.login} variant="subtitle2" color="primary">

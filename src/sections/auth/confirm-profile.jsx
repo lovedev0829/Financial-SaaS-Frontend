@@ -13,7 +13,7 @@ export default function ConfirmProfileView() {
          <CustomizedSteppers activeStep={3} />
          <Stack spacing={3.5}>
                <Stack spacing={2} sx={{ mb: 1, position: 'relative' }} alignItems='center'>
-                  <Typography variant="h2">Confirmation</Typography>
+                  <Typography variant="h3">Confirmation</Typography>
                   <Typography>Confirmation message</Typography>
                </Stack>
          </Stack>

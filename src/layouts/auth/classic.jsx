@@ -1,50 +1,26 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { Typography } from '@mui/material';
+import { alpha, useTheme } from '@mui/material/styles';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-export default function AuthClassicLayout({ children, image, title }) {
+import { bgGradient } from 'src/theme/css';
+
+export default function AuthClassicLayout({ children, image, title, frmMaxWith }) {
 
   const mdUp = useResponsive('up', 'md');
-  const location = useLocation();
-  
-  const [registerFrmStyle, setRegisterFrmStyle] = useState({
-    maxWidth: 500,
-    pt: { xs: 10, md: 10 },
-    pb: { xs: 10, md: 0 },
-  });
-
-
-  const [coverImageStyle, setCoverImageStyle] = useState({
-    maxWidth: 1024,
-    height: 900,
-    px: { xs: 2, md: 2 },
-    pt: { xs: 1, md: 3 },
-    pb: { xs: 1, md: 1 },
-  });
-
-  const getCoverImageURL = () => {
-
-    if(location.pathname === "/auth/profile"){
-        return  '/assets/illustrations/auth2.png';
-    }if(location.pathname === "/auth/jwt/register"){
-      return  '/assets/illustrations/auth3.png';
-    }if(location.pathname === "/auth/confirm"){
-      return  '/assets/illustrations/auth4.png';
-    }
-    return '/assets/illustrations/auth1.png'
-  }
-
+  const theme = useTheme();
   const renderContent = (
     <Stack
       sx={{
         width: 1,
-        mx: 'auto',
-        ...registerFrmStyle
+        maxWidth: frmMaxWith,
+        px: { xs: 2, md: 8 },
+        pt: { xs: 5, md: 15 },
+        pb: { xs: 15, md: 5 },
       }}
     >
       {children}
@@ -52,29 +28,40 @@ export default function AuthClassicLayout({ children, image, title }) {
   );
 
   const renderSection = (
+    <Stack
+      flexGrow={1}
+      spacing={10}
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        ...bgGradient({
+          color: alpha(
+            theme.palette.background.default,
+            theme.palette.mode === 'light' ? 1 : 0.94
+          ),
+          imgUrl: '/assets/background/overlay_2.jpg',
+        }),
+      }}
+    >
+      <Typography variant="h3" sx={{ maxWidth: 480, textAlign: 'center' }}>
+        {title }
+      </Typography>
 
       <Box
         component="img"
         alt="auth"
-        src={image || getCoverImageURL()}
-        spacing={10}
+        src={image || '/assets/illustrations/illustration_dashboard.png'}
         sx={{
-          width: 1,
-          ...coverImageStyle
+          maxWidth: {
+            xs: 480,
+            lg: 560,
+            xl: 720,
+          },
         }}
       />
+
+    </Stack>
   );
-
-  useEffect(() => {
-    
-    if(location.pathname === "/auth/jwt/register"){
-      setRegisterFrmStyle({...registerFrmStyle, maxWidth: 900})
-      setCoverImageStyle({...coverImageStyle, maxWidth:883, height:1200})
-    }if(location.pathname === "/auth/confirm"){
-      setCoverImageStyle({...coverImageStyle,maxWidth:783, height:900})
-    }
-
-  },[])
 
   return (
     <Stack
@@ -94,4 +81,5 @@ AuthClassicLayout.propTypes = {
   children: PropTypes.node,
   image: PropTypes.string,
   title: PropTypes.string,
+  frmMaxWith: PropTypes.number
 };
