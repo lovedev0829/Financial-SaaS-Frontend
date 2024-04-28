@@ -2,9 +2,16 @@ import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
+import { Typography } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
@@ -15,7 +22,6 @@ import Logo from 'src/components/logo';
 import SvgColor from 'src/components/svg-color';
 import { useSettingsContext } from 'src/components/settings';
 
-import Searchbar from '../common/searchbar';
 import { NAV, HEADER } from '../config-layout';
 import SettingsButton from '../common/settings-button';
 import AccountPopover from '../common/account-popover';
@@ -48,9 +54,20 @@ export default function Header({ onOpenNav }) {
         <IconButton onClick={onOpenNav}>
           <SvgColor src="/assets/icons/navbar/ic_menu_item.svg" />
         </IconButton>
-      )}
+      )}    
 
-      <Searchbar />
+      <Stack direction='row' gap={15} mt={3}>
+      
+        <Stack spacing={2} sx={{ mb: 1, position: 'relative' }} alignItems='left'>
+          <Typography variant="h5">Dashboard</Typography>
+          <Typography>View all status from the dashbaord</Typography>
+        </Stack>
+        
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker views={['month', 'year']} />
+        </LocalizationProvider>
+        
+      </Stack>
 
       <Stack
         flexGrow={1}
@@ -59,6 +76,15 @@ export default function Header({ onOpenNav }) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
+        <TextField
+           fullWidth
+           sx={{marginLeft:"10px"}}
+           type='text'
+           placeholder='Search for something'
+           InputProps={{
+            startAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>
+           }}
+        />
         <LanguagePopover />
 
         <NotificationsPopover />

@@ -39,7 +39,7 @@ export function table(theme) {
           fontSize: 14,
           color: theme.palette.text.secondary,
           fontWeight: theme.typography.fontWeightSemiBold,
-          backgroundColor: theme.palette.background.neutral,
+          backgroundColor: theme.palette.background.paper,
         },
         stickyHeader: {
           backgroundColor: theme.palette.background.paper,

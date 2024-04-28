@@ -249,29 +249,7 @@ export const _bankingRecentTransitions = [
     date: _mock.time(4),
     status: 'failed',
     amount: _mock.number.price(4),
-  },
-  {
-    id: _mock.id(5),
-    name: null,
-    avatarUrl: null,
-    type: 'Expenses',
-    message: 'Payment for',
-    category: 'Beauty & Health',
-    date: _mock.time(5),
-    status: 'completed',
-    amount: _mock.number.price(5),
-  },
-  {
-    id: _mock.id(6),
-    name: null,
-    avatarUrl: null,
-    type: 'Expenses',
-    message: 'Payment for',
-    category: 'Books',
-    date: _mock.time(6),
-    status: 'progress',
-    amount: _mock.number.price(6),
-  },
+  }
 ];
 
 // BOOKING

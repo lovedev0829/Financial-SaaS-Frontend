@@ -10,7 +10,7 @@ import { NAV, HEADER } from '../config-layout';
 
 // ----------------------------------------------------------------------
 
-const SPACING = 8;
+const SPACING = 50;
 
 export default function Main({ children, sx, ...other }) {
   const settings = useSettingsContext();
