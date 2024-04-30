@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import DistributorRegisterView from 'src/sections/distributorRegister/register';
+import DistributorRegisterView from 'src/sections/distributorRegister/view';
 
 // ----------------------------------------------------------------------
 

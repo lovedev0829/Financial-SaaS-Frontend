@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import IssuanceRegisterView from 'src/sections/issuanceRegister/register';
+import IssuanceRegisterView from 'src/sections/issuanceRegister/view';
 
 // ----------------------------------------------------------------------
 

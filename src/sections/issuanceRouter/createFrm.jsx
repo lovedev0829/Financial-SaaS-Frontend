@@ -11,14 +11,11 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { SingleInputDateRangeField } from '@mui/x-date-pickers-pro/SingleInputDateRangeField';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
-export default function CreateIssuanceFrm({ issuance }) {
+export default function CreateIssuanceRouterFrm({ issuance }) {
   const NewIssuanceSchema = Yup.object().shape({
     issuance_id_name: Yup.string().required('Issuance Identification is required'),
     asset_sub_type: Yup.string().required('Asset Subtype is required'),
@@ -97,61 +94,46 @@ export default function CreateIssuanceFrm({ issuance }) {
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Interest Rate/Maximum Spread </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Unit price </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Maximum Emission Volume</Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Minimum Contracting Lot Size </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Validity of the Proposal </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Issuance and Expiration Date </Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateRangePicker name="allowedRange" slots={{ field: SingleInputDateRangeField }} />
-            </LocalizationProvider>
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Interest Calculation Base </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Minimum Detention Period </Typography>
-            <RHFTextField name="name" />
-          </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Minimum Date for Early Redemption </Typography>
-            <RHFTextField name="name" />
-          </Stack>
+        <Grid
+          xs={12}
+          md={12}
+          container
+          sx={{ border: '1px solid #E5E5EE', borderRadius: 1, p: 2, m: 1 }}
+        >
+          <Grid xs={12} md={4}>
+            <Stack gap={2}>
+              <Typography component="span" sx={{ mt: 1, color: 'text.disabled' }}>
+                Distributor Name
+              </Typography>
+              <Select xs={12} value={0} id="distributorName">
+                <MenuItem value={0} selected>
+                  Distributor Name
+                </MenuItem>
+                <MenuItem value={10}>LCI</MenuItem>
+                <MenuItem value={20}>LCA</MenuItem>
+                <MenuItem value={30}>CDB</MenuItem>
+              </Select>
+            </Stack>
+          </Grid>
+          <Grid xs={12} md={4}>
+            <Stack gap={2}>
+              <Typography component="span" sx={{ mt: 1, color: 'text.disabled' }}>
+                Status of Issuance
+              </Typography>
+              <Select xs={12} value={0} id="issuanceStatus">
+                <MenuItem value={0} selected>
+                  Pending
+                </MenuItem>
+                <MenuItem value={20}>Canceled</MenuItem>
+                <MenuItem value={30}>Rejected</MenuItem>
+              </Select>
+            </Stack>
+          </Grid>
+          <Grid xs={12} md={12}>
+            <Button variant="contained" color="success" size="large" startIcon={<AddCircleIcon />}>
+              Add More
+            </Button>
+          </Grid>
         </Grid>
         <Grid xs={12} md={12} container>
           <Stack gap={3} direction="row">
@@ -168,6 +150,6 @@ export default function CreateIssuanceFrm({ issuance }) {
   );
 }
 
-CreateIssuanceFrm.propTypes = {
+CreateIssuanceRouterFrm.propTypes = {
   issuance: PropTypes.object,
 };

@@ -59,83 +59,81 @@ export default function CreateDistributorFrm({ issuance }) {
         Distributor Registration
       </Typography>
       <Grid container spacing={2}>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Issuance Identification</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Company Name</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h"> CNPJ</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Type of Institution</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Company's address</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Commercial phone </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Business Email</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Name of Legal Representative </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Legal Representative Contact </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Relationship Status </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={4}>
+        <Grid xs={12} md={4}>
           <Stack gap={2}>
             <Typography variant="h">Cetip Account Number </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
-        <Grid xs={6} md={12} container>
-          <Grid xs={4} md={1.6}>
-            <Button variant="contained" sx={{ bgcolor: '#A0A1AC', width: '150px', height: '50px' }}>
+        <Grid xs={12} md={12} container>
+          <Stack gap={3} direction="row">
+            <Button size="large" variant="contained" sx={{ bgcolor: '#A0A1AC' }}>
               Cancel
             </Button>
-          </Grid>
-          <Grid xs={4} md={1}>
-            <Button variant="contained" color="success" sx={{ width: '150px', height: '50px' }}>
+            <Button size="large" variant="contained" color="success">
               Save Changes
             </Button>
-          </Grid>
+          </Stack>
         </Grid>
       </Grid>
     </FormProvider>
