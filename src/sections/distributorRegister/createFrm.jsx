@@ -7,19 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { SingleInputDateRangeField } from '@mui/x-date-pickers-pro/SingleInputDateRangeField';
 
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
-export default function CreateIssuanceFrm({ issuance }) {
-  const NewIssuanceSchema = Yup.object().shape({
+export default function CreateDistributorFrm({ issuance }) {
+  const NewDistributorSchema = Yup.object().shape({
     issuance_id_name: Yup.string().required('Issuance Identification is required'),
     asset_sub_type: Yup.string().required('Asset Subtype is required'),
     inter_rate_index: Yup.string().required('Interest Rate Indexer is required'),
@@ -56,13 +50,13 @@ export default function CreateIssuanceFrm({ issuance }) {
   );
 
   const methods = useForm({
-    resolver: yupResolver(NewIssuanceSchema),
+    resolver: yupResolver(NewDistributorSchema),
     defaultValues,
   });
   return (
     <FormProvider methods={methods}>
       <Typography variant="h5" sx={{ mb: 5 }}>
-        Issuance Registration
+        Distributor Registration
       </Typography>
       <Grid container spacing={2}>
         <Grid xs={6} md={4}>
@@ -73,83 +67,61 @@ export default function CreateIssuanceFrm({ issuance }) {
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Asset Subtype</Typography>
-            <Select xs={12} value={10} id="assetSubtype">
-              <MenuItem value={10}>LCI</MenuItem>
-              <MenuItem value={20}>LCA</MenuItem>
-              <MenuItem value={30}>CDB</MenuItem>
-            </Select>
-          </Stack>
-        </Grid>
-        <Grid xs={6} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Interest Rate Indexer</Typography>
-            <Select xs={12} value={10} id="assetSubtype">
-              <MenuItem value={10}>Pre-fixed rate (SELIC)</MenuItem>
-              <MenuItem value={20}>LCA</MenuItem>
-              <MenuItem value={30}>CDB</MenuItem>
-            </Select>
-          </Stack>
-        </Grid>
-        <Grid xs={6} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Interest Rate Information </Typography>
+            <Typography variant="h">Company Name</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Interest Rate/Maximum Spread </Typography>
+            <Typography variant="h"> CNPJ</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Unit price </Typography>
+            <Typography variant="h">Type of Institution</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Maximum Emission Volume</Typography>
+            <Typography variant="h">Company's address</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Minimum Contracting Lot Size </Typography>
+            <Typography variant="h">Commercial phone </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Validity of the Proposal </Typography>
+            <Typography variant="h">Business Email</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Issuance and Expiration Date </Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateRangePicker name="allowedRange" slots={{ field: SingleInputDateRangeField }} />
-            </LocalizationProvider>
-          </Stack>
-        </Grid>
-        <Grid xs={6} md={4}>
-          <Stack gap={2}>
-            <Typography variant="h">Interest Calculation Base </Typography>
+            <Typography variant="h">Name of Legal Representative </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Minimum Detention Period </Typography>
+            <Typography variant="h">Legal Representative Contact </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
         <Grid xs={6} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Minimum Date for Early Redemption </Typography>
+            <Typography variant="h">Relationship Status </Typography>
+            <RHFTextField name="name" />
+          </Stack>
+        </Grid>
+        <Grid xs={6} md={4}>
+          <Stack gap={2}>
+            <Typography variant="h">Cetip Account Number </Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>
@@ -170,6 +142,6 @@ export default function CreateIssuanceFrm({ issuance }) {
   );
 }
 
-CreateIssuanceFrm.propTypes = {
+CreateDistributorFrm.propTypes = {
   issuance: PropTypes.object,
 };

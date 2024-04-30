@@ -4,10 +4,14 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
-import CreateIssuanceFrm from './createFrm';
+import CreateDistributorFrm from './createFrm';
 
-export default function CreateIssuanceView({ isOpenAddModal, openAddIssuanceModal, issuance }) {
-  const handleClose = () => openAddIssuanceModal(false);
+export default function CreateDistributorView({
+  isOpenAddModal,
+  openAddDistributorModal,
+  distributor,
+}) {
+  const handleClose = () => openAddDistributorModal(false);
 
   const style = {
     position: 'absolute',
@@ -24,14 +28,14 @@ export default function CreateIssuanceView({ isOpenAddModal, openAddIssuanceModa
   return (
     <Modal open={isOpenAddModal} onClose={handleClose}>
       <Box sx={style}>
-        <CreateIssuanceFrm issuance={issuance} />
+        <CreateDistributorFrm distributor={distributor} />
       </Box>
     </Modal>
   );
 }
 
-CreateIssuanceView.propTypes = {
+CreateDistributorView.propTypes = {
   isOpenAddModal: PropTypes.bool,
-  openAddIssuanceModal: PropTypes.func,
-  issuance: PropTypes.object,
+  openAddDistributorModal: PropTypes.func,
+  distributor: PropTypes.object,
 };
