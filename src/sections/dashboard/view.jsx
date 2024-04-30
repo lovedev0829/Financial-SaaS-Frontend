@@ -6,9 +6,9 @@ import { _bankingRecentTransitions } from 'src/_mock';
 import { useSettingsContext } from 'src/components/settings';
 
 import AppWidgetWorld from './app-widget-world';
-import IssuanceTracking from './issuance-tracking';
 import TopIssuancesTbl from './top-issuances-table';
 import AppWidgetSummary from './app-widget-summary';
+import IssuanceTracking from '../issuanceTrack/track';
 import IssuanceFinancialVolume from './issuance-financial-volume';
 
 export default function DashboardView() {
