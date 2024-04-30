@@ -39,6 +39,7 @@
     "@mui/system": "^5.14.20",
     "@mui/x-data-grid": "^6.18.4",
     "@mui/x-date-pickers": "^7.3.1",
+    "@mui/x-date-pickers-pro": "^7.3.1",
     "@react-pdf/renderer": "^3.1.14",
     "@supabase/supabase-js": "^2.39.0",
     "apexcharts": "^3.44.2",

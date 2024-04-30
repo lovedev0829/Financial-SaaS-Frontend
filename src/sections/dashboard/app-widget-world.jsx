@@ -25,7 +25,7 @@ export default function AppWidgetWorld({ tablist, ...other }) {
           {tablist.slice(0, 3).map(
             (tab) =>
               tab.value === currentTab && (
-                <Stack spacing={3} sx={{ p: 3 }} key={tab.value}>
+                <Stack spacing={2} sx={{ p: 3 }} key={tab.value}>
                     <Grid container>
                       <Grid xs={12} md={9} spacing={1} container item >
                         <Grid>
@@ -49,7 +49,7 @@ export default function AppWidgetWorld({ tablist, ...other }) {
 
                       </Grid>
                       <Grid md={3} item>
-                          <Image  src="/assets/images/news/coin1.png" sx={{ borderRadius: 2 }} />
+                          <Image  src="/assets/images/news/coin1.png" sx={{ borderRadius: 2, maxWidth:"68%" }}  />
                       </Grid>
                     </Grid>
                     <Grid container>
@@ -75,7 +75,7 @@ export default function AppWidgetWorld({ tablist, ...other }) {
 
                       </Grid>
                       <Grid md={3} item >
-                          <Image  src="/assets/images/news/coin2.png" sx={{ borderRadius: 2 }} />
+                          <Image  src="/assets/images/news/coin2.png" sx={{ borderRadius: 2 , maxWidth:"68%"}} />
                       </Grid>
                     </Grid>
                 </Stack>

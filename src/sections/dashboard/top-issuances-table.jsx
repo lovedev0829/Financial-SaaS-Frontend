@@ -8,6 +8,7 @@ import TableBody from '@mui/material/TableBody';
 import CardHeader from '@mui/material/CardHeader';
 import ListItemText from '@mui/material/ListItemText';
 import TableContainer from '@mui/material/TableContainer';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import { fCurrency } from 'src/utils/format-number';
 
@@ -25,7 +26,7 @@ export default function TopIssuancesTbl({
 }) {
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+      <CardHeader title={title} subheader={subheader} />
 
       <TableContainer sx={{ overflow: 'unset' }}>
         <Scrollbar>
@@ -78,7 +79,7 @@ function TopIssuancesRow({ row }) {
             R$2,000,000.00
         </TableCell>
         <TableCell>
-            State ICO
+            <TrendingUpIcon color='primary' />
         </TableCell>
         <TableCell>
             +4.6%

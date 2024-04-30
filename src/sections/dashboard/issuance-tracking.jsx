@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useCallback } from "react";
 
 import { Box, Stack } from "@mui/system";
+import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import { Tab, Card, Tabs, Table, TableRow, TableCell, TableBody, CardHeader, ListItemText, TableContainer } from "@mui/material";
 
@@ -82,15 +83,15 @@ export default function IssuanceTracking({ tablist,title, ...other }) {
                                           +4.6%
                                        </TableCell>
                                        <TableCell>
-                                          confirmed
-                                       </TableCell>
-                                       <TableCell>
                                           <Label
-                                             variant={lightMode ? 'soft' : 'filled'}
-                                             color="success"
-                                          >
+                                                variant={lightMode ? 'soft' : 'filled'}
+                                                color="success"
+                                             >
                                              Confirmed
                                           </Label>
+                                       </TableCell>
+                                       <TableCell>
+                                          <Button variant="outlined">edit</Button>
                                        </TableCell>
                                  </TableRow>
                               </TableBody>

@@ -76,6 +76,7 @@ export default function IssuanceFinancialVolume({ title, chart, ...other }) {
             <Grid container spacing={2} sx={{justifyContent: "flex-end"}}>
               <Grid xs={12} xl={3} >
                 <TextField
+                  xs={12} 
                   type='text'
                   placeholder='Search for something'
                   InputProps={{
@@ -85,6 +86,7 @@ export default function IssuanceFinancialVolume({ title, chart, ...other }) {
               </Grid>
               <Grid xs={12} md={2.5}>
                 <Select
+                  xs={12} 
                   value={0}
                   id="assetSubtype"
                 >
@@ -96,6 +98,7 @@ export default function IssuanceFinancialVolume({ title, chart, ...other }) {
                 </Grid>
                 <Grid xs={12} md={2.5}>
                   <Select
+                    xs={12} 
                     value={0}
                     id="distributor"
                   >

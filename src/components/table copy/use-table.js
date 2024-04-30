@@ -96,6 +96,7 @@ export default function useTable(props) {
   );
 
   return {
+    dense,
     order,
     page,
     orderBy,

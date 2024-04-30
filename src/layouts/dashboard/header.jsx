@@ -56,17 +56,13 @@ export default function Header({ onOpenNav }) {
         </IconButton>
       )}    
 
-      <Stack direction='row' gap={15} mt={3}>
+      <Stack direction='row' gap={15} 
+        spacing={{ xs: 0.5, sm: 1 }} flexGrow={1}>
       
-        <Stack spacing={2} sx={{ mb: 1, position: 'relative' }} alignItems='left'>
+        <Stack spacing={1} sx={{ position: 'relative' }} alignItems='left'>
           <Typography variant="h5">Dashboard</Typography>
           <Typography>View all status from the dashbaord</Typography>
         </Stack>
-        
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker views={['month', 'year']} />
-        </LocalizationProvider>
-        
       </Stack>
 
       <Stack
@@ -76,6 +72,9 @@ export default function Header({ onOpenNav }) {
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1 }}
       >
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker views={['month', 'year']} />
+        </LocalizationProvider>
         <TextField
            fullWidth
            sx={{marginLeft:"10px"}}
