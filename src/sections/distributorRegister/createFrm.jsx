@@ -85,7 +85,7 @@ export default function CreateDistributorFrm({ issuance }) {
         </Grid>
         <Grid xs={12} md={4}>
           <Stack gap={2}>
-            <Typography variant="h">Company's address</Typography>
+            <Typography variant="h">Company&apos; address</Typography>
             <RHFTextField name="name" />
           </Stack>
         </Grid>

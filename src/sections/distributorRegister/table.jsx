@@ -22,7 +22,7 @@ export default function IssuanceToolbar() {
               <TableCell>Company Name </TableCell>
               <TableCell> CNPJ</TableCell>
               <TableCell>Type of Institution </TableCell>
-              <TableCell>Company's address</TableCell>
+              <TableCell>Company&apos; address</TableCell>
               <TableCell>Commercial phone </TableCell>
               <TableCell>Business Email</TableCell>
               <TableCell>Name of Legal Representative </TableCell>
