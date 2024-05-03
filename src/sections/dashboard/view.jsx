@@ -3,8 +3,6 @@ import Container from '@mui/material/Container';
 
 import { _bankingRecentTransitions } from 'src/_mock';
 
-import { useSettingsContext } from 'src/components/settings';
-
 import AppWidgetWorld from './app-widget-world';
 import TopIssuancesTbl from './top-issuances-table';
 import AppWidgetSummary from './app-widget-summary';
@@ -12,10 +10,8 @@ import IssuanceTracking from '../issuanceTrack/track';
 import IssuanceFinancialVolume from './issuance-financial-volume';
 
 export default function DashboardView() {
-  const settings = useSettingsContext();
-
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Container maxWidth="100%">
       <Grid container spacing={3}>
         <Grid xs={12} md={2.4}>
           <AppWidgetSummary
@@ -23,7 +19,7 @@ export default function DashboardView() {
             percent={2.6}
             total={18765}
             chart={{
-              series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+              series: [1, 8, 35, 50, 82, 84, 77, 60, 87, 43],
             }}
             sx={{
               backgroundImage: 'linear-gradient(85deg, #29C3D2 0%, #29C3D2 0% , #A6ECEE 100%)',
@@ -37,7 +33,7 @@ export default function DashboardView() {
             percent={2.6}
             total={18765}
             chart={{
-              series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+              series: [1, 8, 35, 50, 82, 84, 77, 60, 87, 43],
             }}
             sx={{
               backgroundImage: 'linear-gradient(85deg, #79AFF0 0%, #BFDBFD 100%)',
@@ -51,7 +47,7 @@ export default function DashboardView() {
             percent={2.6}
             total={18765}
             chart={{
-              series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+              series: [1, 8, 35, 50, 82, 84, 77, 60, 87, 43],
             }}
             sx={{
               backgroundImage: 'linear-gradient(85deg, #F290B9 0%, #FDBDD8 100%)',
@@ -65,7 +61,7 @@ export default function DashboardView() {
             percent={2.6}
             total={18765}
             chart={{
-              series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+              series: [1, 8, 35, 50, 82, 84, 77, 60, 87, 43],
             }}
             sx={{
               backgroundImage: 'linear-gradient(85deg, #C1ACEB 0%, #E2D5FC 100%)',
@@ -79,7 +75,7 @@ export default function DashboardView() {
             percent={2.6}
             total={18765}
             chart={{
-              series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
+              series: [1, 8, 35, 50, 82, 84, 77, 60, 87, 43],
             }}
             sx={{
               backgroundImage: 'linear-gradient(85deg, #EC89EE 0%, #FEC2FF 100%)',

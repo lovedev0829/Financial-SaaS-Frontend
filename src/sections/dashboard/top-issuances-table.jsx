@@ -17,13 +17,7 @@ import { TableHeadCustom } from 'src/components/table';
 
 // ----------------------------------------------------------------------
 
-export default function TopIssuancesTbl({
-  title,
-  subheader,
-  tableLabels,
-  tableData,
-  ...other
-}) {
+export default function TopIssuancesTbl({ title, subheader, tableLabels, tableData, ...other }) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -31,7 +25,7 @@ export default function TopIssuancesTbl({
       <TableContainer sx={{ overflow: 'unset' }}>
         <Scrollbar>
           <Table sx={{ minWidth: 720 }}>
-            <TableHeadCustom headLabel={tableLabels} sx={{backgroundColor: "white"}} />
+            <TableHeadCustom headLabel={tableLabels} sx={{ backgroundColor: 'white' }} />
 
             <TableBody>
               {tableData.map((row) => (
@@ -55,37 +49,29 @@ TopIssuancesTbl.propTypes = {
 // ----------------------------------------------------------------------
 
 function TopIssuancesRow({ row }) {
-
   return (
     <TableRow>
-        <TableCell>
-          <ListItemText
-            primary="CDB"
-            primaryTypographyProps={{ typography: 'body2' }}
-            secondaryTypographyProps={{
-              mt: 0.5,
-              component: 'span',
-              typography: 'caption',
-            }}
-          />
-        </TableCell>
+      <TableCell>
+        <ListItemText
+          primary="CDB"
+          primaryTypographyProps={{ typography: 'body2' }}
+          secondaryTypographyProps={{
+            mt: 0.5,
+            component: 'span',
+            typography: 'caption',
+          }}
+        />
+      </TableCell>
 
-        <TableCell>{fCurrency(row.amount)}</TableCell>
+      <TableCell>{fCurrency(row.amount)}</TableCell>
 
-        <TableCell>
-            06/01/2025
-        </TableCell>
-        <TableCell>
-            R$2,000,000.00
-        </TableCell>
-        <TableCell>
-            <TrendingUpIcon color='primary' />
-        </TableCell>
-        <TableCell>
-            +4.6%
-        </TableCell>
-
-      </TableRow>
+      <TableCell>06/01/2025</TableCell>
+      <TableCell>R$2,000,000.00</TableCell>
+      <TableCell>
+        <TrendingUpIcon color="primary" />
+      </TableCell>
+      <TableCell>+4.6%</TableCell>
+    </TableRow>
   );
 }
 

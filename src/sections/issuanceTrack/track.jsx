@@ -31,7 +31,7 @@ export default function TrackView({ tablist, title, ...other }) {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateRangePicker localeText={{ start: 'From Date', end: 'To Date' }} />
             </LocalizationProvider>
-            <Button size="large" variant="contained" color="primary">
+            <Button size="large" variant="outlined">
               All
             </Button>
           </Stack>

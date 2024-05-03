@@ -3,105 +3,150 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { useTheme } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import NorthEastIcon from '@mui/icons-material/NorthEast';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
 
-import Chart from 'src/components/chart';
-import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
+import Chart, { useChart } from 'src/components/chart';
 
 import { fNumber, fPercent } from '../../utils/format-number';
-
 // ----------------------------------------------------------------------
 
 export default function AppWidgetSummary({ title, percent, total, chart, sx, ...other }) {
-  const theme = useTheme();
+  const { colors = [['white', 'white']], series, options } = chart;
 
-  const {
-    colors = [theme.palette.primary.light, theme.palette.primary.main],
-    series,
-    options,
-  } = chart;
-
-  const chartOptions = {
+  const chartOptions = useChart({
     colors: colors.map((colr) => colr[1]),
     fill: {
       type: 'gradient',
       gradient: {
-        colorStops: [
-          { offset: 0, color: colors[0], opacity: 1 },
-          { offset: 100, color: colors[1], opacity: 1 },
-        ],
+        colorStops: colors.map((colr) => [
+          { offset: 30, color: colr[0], opacity: 0.1 },
+          { offset: 70, color: colr[1], opacity: 0.3 },
+        ]),
       },
     },
     chart: {
+      animations: {
+        enabled: true,
+      },
       sparkline: {
         enabled: true,
       },
     },
-    plotOptions: {
-      bar: {
-        columnWidth: '68%',
-        borderRadius: 2,
-      },
-    },
     tooltip: {
-      x: { show: false },
+      x: {
+        show: false,
+      },
       y: {
         formatter: (value) => fNumber(value),
         title: {
           formatter: () => '',
         },
       },
-      marker: { show: false },
     },
     ...options,
-  };
+  });
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3, ...sx }} {...other}>
-      <Box sx={{ flexGrow: 1 }} 
-      
-      >
-        <Typography variant="subtitle2">{title}</Typography>
-
-        <Stack direction="row" alignItems="center" sx={{ mt: 2, mb: 1 }}>
-          <Iconify
-            width={24}
-            icon={
-              percent < 0
-                ? 'solar:double-alt-arrow-down-bold-duotone'
-                : 'solar:double-alt-arrow-up-bold-duotone'
-            }
-            sx={{
-              mr: 1,
-              color: 'success.main',
-              ...(percent < 0 && {
-                color: 'error.main',
-              }),
-            }}
-          />
-
-          <Typography component="div" variant="subtitle2">
-            {percent > 0 && '+'}
-
-            {fPercent(percent)}
-          </Typography>
+      <Box sx={{ flexGrow: 1 }}>
+        <Stack container direction="row" spacing={2}>
+          <Stack spacing={2}>
+            <IconComponent title={title} />
+          </Stack>
+          <Stack direction="column">
+            <Typography fontSize={20}>{title}</Typography>
+            <Stack direction="row">
+              <Typography fontSize={20}>R$ 25,463</Typography>
+              <Typography variant="subtitle1" fontSize={14} mt={1}>
+                .58
+              </Typography>
+            </Stack>
+          </Stack>
         </Stack>
-
-        <Typography variant="h3">{fNumber(total)}</Typography>
+        <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2, mb: 1 }}>
+            <Label
+              style={{
+                fontSize: '12px',
+                color: '#0eab84',
+                backgroundColor: '#b0e9ef',
+                padding: '12px',
+                borderRadius: '20px',
+              }}
+            >
+              {percent > 0 && '+'}
+              {fPercent(percent)}
+              <NorthEastIcon sx={{ width: '15px', marginBottom: '9px' }} />
+            </Label>
+            <Typography fontSize={12}>Last 7 days activity</Typography>
+          </Stack>
+          <Stack justifyContent="space-around">
+            <Chart
+              dir="ltr"
+              type="area"
+              series={[{ data: series }]}
+              options={chartOptions}
+              width={86}
+              height={54}
+            />
+          </Stack>
+        </Stack>
       </Box>
-
-      <Chart
-        dir="ltr"
-        type="bar"
-        series={[{ data: series }]}
-        options={chartOptions}
-        width={60}
-        height={36}
-      />
     </Card>
   );
 }
+
+export const IconComponent = ({ title }) => {
+  const boxStyle = {
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    width: '50px',
+    height: '50px',
+    backgroundColor: '#82d9e1',
+    borderRadius: '50%',
+  };
+
+  switch (title) {
+    case 'Issuance volume':
+      return (
+        <Box sx={{ ...boxStyle, backgroundColor: '#82d9e1' }}>
+          <InsertChartIcon sx={{ width: 30, height: 30, color: '#229DA9' }} />
+        </Box>
+      );
+
+    case 'Selic Rate':
+      return (
+        <Box sx={{ ...boxStyle, backgroundColor: '#BFDBFD' }}>
+          <Avatar sx={{ width: 30, height: 30 }} src="assets/dashboard/selic.svg" />
+        </Box>
+      );
+    case 'IGPM':
+      return (
+        <Box sx={{ ...boxStyle, backgroundColor: '#FDBDD8' }}>
+          <Avatar sx={{ width: 30, height: 30 }} src="assets/dashboard/ipgm.svg" />
+        </Box>
+      );
+    case 'IPCA':
+      return (
+        <Box sx={{ ...boxStyle, backgroundColor: '#E2D5FC' }}>
+          <Avatar sx={{ width: 30, height: 30 }} src="assets/dashboard/ipca.svg" />
+        </Box>
+      );
+    case 'USD':
+      return (
+        <Box sx={{ ...boxStyle, backgroundColor: '#FEC2FF' }}>
+          <Avatar sx={{ width: 30, height: 30 }} src="assets/dashboard/usd.svg" />
+        </Box>
+      );
+    default:
+      return null; // Return null or some default component if title doesn't match
+  }
+};
 
 AppWidgetSummary.propTypes = {
   chart: PropTypes.object,
@@ -109,4 +154,8 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
   title: PropTypes.string,
   total: PropTypes.number,
+};
+
+IconComponent.propTypes = {
+  title: PropTypes.string,
 };

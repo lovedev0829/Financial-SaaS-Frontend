@@ -40,7 +40,7 @@ const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.text.disabled,
   ...(ownerState.active && {
     color: theme.palette.success.main,
-  })
+  }),
 }));
 
 function QontoStepIcon(props) {
@@ -48,11 +48,7 @@ function QontoStepIcon(props) {
   console.log(props);
   return (
     <QontoStepIconRoot ownerState={{ active }} className={className}>
-      {completed ? (
-        <CheckCircleIcon color='primary' />
-      ) : (
-        <RadioButtonCheckedIcon />
-      )}
+      {completed ? <CheckCircleIcon color="primary" /> : <RadioButtonCheckedIcon />}
     </QontoStepIconRoot>
   );
 }
@@ -63,21 +59,20 @@ QontoStepIcon.propTypes = {
   completed: PropTypes.bool,
 };
 
-
 export default function CustomizedSteppers(props) {
   const { activeStep } = props;
 
   return (
-      <Stepper alternativeLabel activeStep={activeStep}  connector={<QontoConnector />}>
-        {STEPS.map((label) => (
-          <Step key={label} >
-            <StepLabel StepIconComponent={QontoStepIcon} >{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+    <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
+      {STEPS.map((label) => (
+        <Step key={label}>
+          <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+        </Step>
+      ))}
+    </Stepper>
   );
 }
 
 CustomizedSteppers.propTypes = {
-  activeStep: PropTypes.number.isRequired
-}
+  activeStep: PropTypes.number.isRequired,
+};
