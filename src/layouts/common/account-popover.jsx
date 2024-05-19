@@ -1,6 +1,5 @@
 import { m } from 'framer-motion';
 
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -27,11 +26,11 @@ const OPTIONS = [
   },
   {
     label: 'Profile',
-    linkTo: '/#1',
+    linkTo: '/dashboard/profile',
   },
   {
     label: 'Settings',
-    linkTo: '/#2',
+    linkTo: '/dashboard/settings',
   },
 ];
 
@@ -63,6 +62,12 @@ export default function AccountPopover() {
 
   return (
     <>
+      <Stack textAlign="right" ml={2}>
+        <Typography variant="subtitle2" noWrap color="black">
+          {user?.displayName}
+        </Typography>
+        <Typography variant="subtitle2">{user?.role}</Typography>
+      </Stack>
       <IconButton
         component={m.button}
         whileTap="tap"
@@ -93,7 +98,7 @@ export default function AccountPopover() {
       </IconButton>
 
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
-        <Box sx={{ p: 2, pb: 1.5 }}>
+        {/* <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
             {user?.displayName}
           </Typography>
@@ -103,7 +108,7 @@ export default function AccountPopover() {
           </Typography>
         </Box>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: 'dashed' }} /> */}
 
         <Stack sx={{ p: 1 }}>
           {OPTIONS.map((option) => (

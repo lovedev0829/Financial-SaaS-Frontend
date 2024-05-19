@@ -7,51 +7,71 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
+import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+import { useRouter, useParams } from 'src/routes/hooks';
+
+import { useAuthContext } from 'src/auth/hooks';
+import { PATH_AFTER_REGISTER } from 'src/config-global';
 
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import CustomizedSteppers from 'src/components/stepper-view/customized-steppers';
 
-import { FormSchema } from './schema';
-
-export const defaultValues = {
-  firstName: '',
-  lastName: '',
-  callPhone: '',
-  company: '',
-  email: '',
-  confirmEmail: '',
-  site: '',
-  message: '',
-};
+import { RegisterSchema } from './schema';
 
 export default function JwtRegisterView() {
-  const router = useRouter();
+  const { register } = useAuthContext();
 
+  const router = useRouter();
+  const params = useParams();
+
+  const { companyRole } = params;
+
+  const defaultValues = {
+    firstName: '',
+    lastName: '',
+    callPhone: '',
+    company: '',
+    email: '',
+    site: '',
+    cnpj: '',
+    message: '',
+  };
   const methods = useForm({
-    resolver: yupResolver(FormSchema),
+    resolver: yupResolver(RegisterSchema),
     defaultValues,
   });
 
-  const handleNextStep = (e) => {
-    e.preventDefault();
-    router.push(paths.auth.confirmProfile);
-  };
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await register?.({ ...data, companyRole });
+      router.push(PATH_AFTER_REGISTER);
+    } catch (error) {
+      reset();
+      console.log(typeof error === 'string' ? error : error.message);
+    }
+  });
+
   const loginRouter = (e) => {
     e.preventDefault();
     router.push(paths.auth.jwt.login);
   };
+
   return (
     <Stack spacing={5}>
       <CustomizedSteppers activeStep={1} />
@@ -60,10 +80,10 @@ export default function JwtRegisterView() {
           <Typography variant="h4">Register</Typography>
           <Typography>Submit your details</Typography>
         </Stack>
-        <FormProvider methods={methods}>
+        <FormProvider methods={methods} onSubmit={onSubmit}>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <RHFTextField
-              name="firstname"
+              name="firstName"
               label="First Name"
               InputProps={{
                 startAdornment: (
@@ -74,7 +94,7 @@ export default function JwtRegisterView() {
               }}
             />
             <RHFTextField
-              name="lastname"
+              name="lastName"
               label="Last Name"
               InputProps={{
                 startAdornment: (
@@ -87,7 +107,7 @@ export default function JwtRegisterView() {
           </Stack>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <RHFTextField
-              name="callphone"
+              name="callPhone"
               label="Call Phone"
               InputProps={{
                 startAdornment: (
@@ -133,7 +153,18 @@ export default function JwtRegisterView() {
               }}
             />
           </Stack>
-          <Stack sx={{ width: 1, mb: 3 }}>
+          <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
+            <RHFTextField
+              label="CNPJ"
+              name="cnpj"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <BusinessOutlinedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
             <RHFTextField
               label="Site"
               name="site"
@@ -199,16 +230,16 @@ export default function JwtRegisterView() {
                 sx={{ justifyContent: 'unset' }}
                 onClick={router.back}
               />
-              <Button
-                size="large"
-                variant="contained"
+              <LoadingButton
                 color="primary"
-                endIcon={<ArrowRightAltIcon />}
+                size="large"
+                type="submit"
+                variant="contained"
                 style={{ width: '120px' }}
-                onClick={handleNextStep}
+                loading={isSubmitting}
               >
                 Next
-              </Button>
+              </LoadingButton>
             </Stack>
           </Stack>
         </FormProvider>

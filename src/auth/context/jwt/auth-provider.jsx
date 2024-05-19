@@ -17,6 +17,7 @@ import { setSession, isValidToken } from './utils';
 const initialState = {
   user: null,
   loading: true,
+  companyProspect: null,
 };
 
 const reducer = (state, action) => {
@@ -36,6 +37,12 @@ const reducer = (state, action) => {
     return {
       ...state,
       user: action.payload.user,
+    };
+  }
+  if (action.type === 'COMPANY_PROSPECT') {
+    return {
+      ...state,
+      companyProspect: action.payload.company,
     };
   }
   if (action.type === 'LOGOUT') {
@@ -122,26 +129,25 @@ export function AuthProvider({ children }) {
   }, []);
 
   // REGISTER
-  const register = useCallback(async (email, password, firstName, lastName) => {
+  const register = useCallback(async (params) => {
     const data = {
-      email,
-      password,
-      firstName,
-      lastName,
+      firstName: params.firstName,
+      lastName: params.lastName,
+      callPhone: params.callPhone,
+      company: params.company,
+      cnpj: params.cnpj,
+      site: params.site,
+      message: params.message,
+      email: params.email,
+      companyRole: params.companyRole,
     };
 
     const response = await axios.post(endpoints.auth.register, data);
-
-    const { accessToken, user } = response.data;
-
-    sessionStorage.setItem(STORAGE_KEY, accessToken);
-
     dispatch({
-      type: 'REGISTER',
+      type: 'COMPANY_PROSPECT',
       payload: {
-        user: {
-          ...user,
-          accessToken,
+        companyProspect: {
+          ...response,
         },
       },
     });

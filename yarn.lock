@@ -1962,6 +1962,11 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@react-br-forms/cpf-cnpj-mask@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@react-br-forms/cpf-cnpj-mask/-/cpf-cnpj-mask-1.0.6.tgz#34bfd22d8d4bbe69e1f71a0770b3d0f33a75eb30"
+  integrity sha512-zZFDpJC45vx1jqB2E47/wfs7vF4Mjz/rm/0uqrkJgZWUdZ2eMMceBK9g+Xqbh6wVj6vx89gAQ+2CxH5UEAL9Iw==
+
 "@react-pdf/fns@2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@react-pdf/fns/-/fns-2.2.1.tgz#04fe664a6f70214569c9c27e249e3395836f37d5"

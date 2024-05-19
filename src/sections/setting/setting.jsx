@@ -7,39 +7,31 @@ export default function Setting() {
   return (
     <Stack gap={2}>
       <Grid container gap={2} justifyContent="space-between">
-        <Typography>Account</Typography>
+        <Typography width="100px">Account</Typography>
         <Typography>Active</Typography>
-        <Typography>
-          <Button color="inherit" variant="outlined" size="small">
-            edit
-          </Button>
-        </Typography>
+        <Button color="inherit" variant="outlined" size="small">
+          edit
+        </Button>
       </Grid>
       <Grid container gap={2} justifyContent="space-between">
-        <Typography>Security Question</Typography>
+        <Typography width="187px">Security Question</Typography>
         <Typography>Mother&apos; birthplace</Typography>
-        <Typography>
-          <Button color="inherit" variant="outlined" size="small">
-            edit
-          </Button>
-        </Typography>
+        <Button color="inherit" variant="outlined" size="small">
+          edit
+        </Button>
       </Grid>
       <Grid container gap={2} justifyContent="space-between">
-        <Typography>Account type</Typography>
+        <Typography width="100px">Account type</Typography>
         <Typography>Issuer</Typography>
-        <Typography>
-          <Button color="inherit" variant="outlined" size="small">
-            edit
-          </Button>
-        </Typography>
+        <Button color="inherit" variant="outlined" size="small">
+          edit
+        </Button>
       </Grid>
       <Grid container gap={2} justifyContent="space-between">
         <Typography>Download My Data</Typography>
-        <Typography>
-          <Button color="inherit" variant="outlined" size="small">
-            Download
-          </Button>
-        </Typography>
+        <Button color="inherit" variant="outlined" size="small">
+          Download
+        </Button>
       </Grid>
     </Stack>
   );

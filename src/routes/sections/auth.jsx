@@ -29,18 +29,18 @@ const authJwt = {
       path: 'login',
       element: (
         <GuestGuard>
-          <AuthClassicLayout  frmMaxWith={600}>
-            <JwtLoginPage  />
+          <AuthClassicLayout frmMaxWith={600}>
+            <JwtLoginPage />
           </AuthClassicLayout>
         </GuestGuard>
       ),
     },
     {
-      path: 'register',
+      path: 'register/:companyRole',
       element: (
         <GuestGuard>
           <AuthClassicLayout frmMaxWith={900}>
-            <JwtRegisterPage  />
+            <JwtRegisterPage />
           </AuthClassicLayout>
         </GuestGuard>
       ),
@@ -49,15 +49,15 @@ const authJwt = {
 };
 
 const authProfile = {
-    path: 'profile',
-    element: (
-      <GuestGuard>
-        <AuthClassicLayout frmMaxWith={800}>
-          <SelectProfile/>
-        </AuthClassicLayout>
-      </GuestGuard>
-    ),
-}
+  path: 'profile',
+  element: (
+    <GuestGuard>
+      <AuthClassicLayout frmMaxWith={800}>
+        <SelectProfile />
+      </AuthClassicLayout>
+    </GuestGuard>
+  ),
+};
 
 const confirmRoutes = {
   path: 'confirm',
@@ -81,7 +81,6 @@ const confirmRoutes = {
     },
   ],
 };
-
 
 export const authRoutes = [
   {

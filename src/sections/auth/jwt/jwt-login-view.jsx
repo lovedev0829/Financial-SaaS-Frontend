@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Link from '@mui/material/Link';
@@ -73,7 +73,7 @@ export default function JwtLoginView() {
   });
 
   const renderHead = (
-    <Stack spacing={2} sx={{ mb: 5 }} alignItems='center'>
+    <Stack spacing={2} sx={{ mb: 5 }} alignItems="center">
       <Typography variant="h4">Login</Typography>
       <Typography>Submit your details</Typography>
     </Stack>
@@ -90,7 +90,7 @@ export default function JwtLoginView() {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={password.onToggle} edge="end" >
+              <IconButton onClick={password.onToggle} edge="end">
                 <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
               </IconButton>
             </InputAdornment>
@@ -101,9 +101,7 @@ export default function JwtLoginView() {
       <Link variant="body2" color="primary" underline="always" sx={{ alignSelf: 'flex-end' }}>
         Forgot password?
       </Link>
-      <ReCAPTCHA
-        sitekey="Your client site key"
-      />
+      <ReCAPTCHA sitekey="6LdZyc4pAAAAACWO5qLVA0MA_mnGKhF_ISULVZVU" />
       <LoadingButton
         fullWidth
         size="large"
@@ -115,11 +113,16 @@ export default function JwtLoginView() {
         Login
       </LoadingButton>
 
-      <Stack direction="row" spacing={2} pt={5}  alignItems="center" justifyContent='center'>
+      <Stack direction="row" spacing={2} pt={5} alignItems="center" justifyContent="center">
         <Typography variant="subtitle2">Do not have an account?</Typography>
-        <Link component={RouterLink} href={paths.auth.selectProfile} variant="subtitle2" color="primary">
-            Register
-          </Link>
+        <Link
+          component={RouterLink}
+          href={paths.auth.selectProfile}
+          variant="subtitle2"
+          color="primary"
+        >
+          Register
+        </Link>
       </Stack>
     </Stack>
   );

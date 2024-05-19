@@ -45,7 +45,6 @@ const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
 
 function QontoStepIcon(props) {
   const { active, completed, className } = props;
-  console.log(props);
   return (
     <QontoStepIconRoot ownerState={{ active }} className={className}>
       {completed ? <CheckCircleIcon color="primary" /> : <RadioButtonCheckedIcon />}

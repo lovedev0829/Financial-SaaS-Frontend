@@ -25,8 +25,6 @@ import { useSettingsContext } from 'src/components/settings';
 import { NAV, HEADER } from '../config-layout';
 import SettingsButton from '../common/settings-button';
 import AccountPopover from '../common/account-popover';
-import ContactsPopover from '../common/contacts-popover';
-import LanguagePopover from '../common/language-popover';
 import NotificationsPopover from '../common/notifications-popover';
 
 // ----------------------------------------------------------------------
@@ -54,12 +52,10 @@ export default function Header({ onOpenNav }) {
         <IconButton onClick={onOpenNav}>
           <SvgColor src="/assets/icons/navbar/ic_menu_item.svg" />
         </IconButton>
-      )}    
+      )}
 
-      <Stack direction='row' gap={15} 
-        spacing={{ xs: 0.5, sm: 1 }} flexGrow={1}>
-      
-        <Stack spacing={1} sx={{ position: 'relative' }} alignItems='left'>
+      <Stack direction="row" gap={15} spacing={{ xs: 0.5, sm: 1 }} flexGrow={1}>
+        <Stack spacing={1} sx={{ position: 'relative' }} alignItems="left">
           <Typography variant="h5">Dashboard</Typography>
           <Typography>View all status from the dashbaord</Typography>
         </Stack>
@@ -76,21 +72,26 @@ export default function Header({ onOpenNav }) {
           <DatePicker views={['month', 'year']} />
         </LocalizationProvider>
         <TextField
-           fullWidth
-           sx={{marginLeft:"10px"}}
-           type='text'
-           placeholder='Search for something'
-           InputProps={{
-            startAdornment: <InputAdornment position="start"><SearchIcon/></InputAdornment>
-           }}
+          fullWidth
+          sx={{ marginLeft: '10px' }}
+          type="text"
+          placeholder="Search for something"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
-        <LanguagePopover />
+
+        {/* <LanguagePopover /> */}
+
+        <SettingsButton />
 
         <NotificationsPopover />
 
-        <ContactsPopover />
-
-        <SettingsButton />
+        {/* <ContactsPopover /> */}
 
         <AccountPopover />
       </Stack>
