@@ -42,7 +42,7 @@ const reducer = (state, action) => {
   if (action.type === 'COMPANY_PROSPECT') {
     return {
       ...state,
-      companyProspect: action.payload.company,
+      companyProspect: action.payload.companyProspect,
     };
   }
   if (action.type === 'LOGOUT') {
@@ -114,7 +114,6 @@ export function AuthProvider({ children }) {
     const response = await axios.post(endpoints.auth.login, data);
 
     const { accessToken, user } = response.data;
-
     setSession(accessToken);
 
     dispatch({
@@ -130,7 +129,7 @@ export function AuthProvider({ children }) {
 
   // REGISTER
   const register = useCallback(async (params) => {
-    const data = {
+    const registerSchema = {
       firstName: params.firstName,
       lastName: params.lastName,
       callPhone: params.callPhone,
@@ -142,14 +141,16 @@ export function AuthProvider({ children }) {
       companyRole: params.companyRole,
     };
 
-    const response = await axios.post(endpoints.auth.register, data);
-    dispatch({
-      type: 'COMPANY_PROSPECT',
-      payload: {
-        companyProspect: {
-          ...response,
+    await axios.post(endpoints.auth.register, registerSchema).then((res) => {
+      const { data } = res.data;
+      dispatch({
+        type: 'COMPANY_PROSPECT',
+        payload: {
+          companyProspect: {
+            ...data,
+          },
         },
-      },
+      });
     });
   }, []);
 
@@ -174,12 +175,13 @@ export function AuthProvider({ children }) {
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
+      companyProspect: state.companyProspect,
       //
       login,
       register,
       logout,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, state.user, state.companyProspect, status]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

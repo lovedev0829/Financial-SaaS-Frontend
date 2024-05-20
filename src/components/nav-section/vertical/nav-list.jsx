@@ -45,6 +45,7 @@ export default function NavList({ data, depth, slotProps }) {
         icon={data.icon}
         info={data.info}
         roles={data.roles}
+        companyRoles={data.companyRoles}
         caption={data.caption}
         disabled={data.disabled}
         //
@@ -52,6 +53,7 @@ export default function NavList({ data, depth, slotProps }) {
         hasChild={!!data.children}
         externalLink={data.path.includes('http')}
         currentRole={slotProps?.currentRole}
+        currentCompanyRole={slotProps?.currentCompanyRole}
         //
         active={active}
         className={active ? 'active' : ''}

@@ -1,12 +1,30 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { useRouter } from 'src/routes/hooks';
+
+import { AuthContext } from 'src/auth/context/jwt';
+
 import CustomizedSteppers from 'src/components/stepper-view/customized-steppers';
 
 export default function ConfirmProfileView() {
+  const { companyProspect } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (companyProspect === null || companyProspect === undefined) {
+      router.push('/');
+    } else {
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
+    }
+  }, [companyProspect, router]);
+
   return (
     <Stack spacing={7}>
       <CustomizedSteppers activeStep={3} />

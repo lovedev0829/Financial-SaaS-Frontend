@@ -18,6 +18,7 @@ const User = lazy(() => import('src/pages/user/index'));
 const Profile = lazy(() => import('src/pages/profile/index'));
 const Setting = lazy(() => import('src/pages/setting/index'));
 const Customer = lazy(() => import('src/pages/customer/index'));
+const CompanyProspect = lazy(() => import('src/pages/company/prospect'));
 
 // ----------------------------------------------------------------------
 
@@ -46,14 +47,16 @@ export const dashboardRoutes = [
       },
       {
         path: 'distributor',
-        children: [
-          { path: 'register', element: <DistributorRegister /> },
-        ],
+        children: [{ path: 'register', element: <DistributorRegister /> }],
       },
       { path: 'user', element: <User /> },
       { path: 'profile', element: <Profile /> },
       { path: 'settings', element: <Setting /> },
       { path: 'customer', element: <Customer /> },
+      {
+        path: 'company',
+        children: [{ path: 'prospect', element: <CompanyProspect /> }],
+      },
     ],
   },
 ];

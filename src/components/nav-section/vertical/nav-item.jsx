@@ -23,13 +23,15 @@ const NavItem = forwardRef(
       disabled,
       caption,
       roles,
+      companyRoles,
       //
       open,
       depth,
       active,
       hasChild,
       externalLink,
-      currentRole = 'admin',
+      currentRole,
+      currentCompanyRole,
       ...other
     },
     ref
@@ -93,7 +95,10 @@ const NavItem = forwardRef(
     );
 
     // Hidden item by role
-    if (roles && !roles.includes(`${currentRole}`)) {
+    if (
+      (roles && !roles.includes(`${currentRole}`)) ||
+      (companyRoles && !companyRoles.includes(`${currentCompanyRole}`))
+    ) {
       return null;
     }
 
@@ -150,7 +155,9 @@ NavItem.propTypes = {
   caption: PropTypes.string,
   externalLink: PropTypes.bool,
   currentRole: PropTypes.string,
+  currentCompanyRole: PropTypes.string,
   roles: PropTypes.arrayOf(PropTypes.string),
+  companyRoles: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default NavItem;

@@ -30,6 +30,9 @@ export const paths = {
     distributor: {
       register: `${ROOTS.DASHBOARD}/distributor/register`,
     },
+    company: {
+      prospect: `${ROOTS.DASHBOARD}/company/prospect`,
+    },
     user: `${ROOTS.DASHBOARD}/user`,
     profile: `${ROOTS.DASHBOARD}/profile`,
     settings: `${ROOTS.DASHBOARD}/settings`,

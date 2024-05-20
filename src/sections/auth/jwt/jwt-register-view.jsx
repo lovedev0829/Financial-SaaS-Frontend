@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
+import Snackbar from '@mui/material/Snackbar';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -23,17 +25,17 @@ import { useRouter, useParams } from 'src/routes/hooks';
 import { useAuthContext } from 'src/auth/hooks';
 import { PATH_AFTER_REGISTER } from 'src/config-global';
 
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
 import CustomizedSteppers from 'src/components/stepper-view/customized-steppers';
+import FormProvider, { RHFCheckbox, RHFTextField } from 'src/components/hook-form';
 
 import { RegisterSchema } from './schema';
 
 export default function JwtRegisterView() {
   const { register } = useAuthContext();
-
+  const [notification, setNotification] = useState(false);
+  const [notificationMessageBox, setNotificationMessageBox] = useState(false);
   const router = useRouter();
   const params = useParams();
-
   const { companyRole } = params;
 
   const defaultValues = {
@@ -45,6 +47,8 @@ export default function JwtRegisterView() {
     site: '',
     cnpj: '',
     message: '',
+    term1: false,
+    term2: false,
   };
   const methods = useForm({
     resolver: yupResolver(RegisterSchema),
@@ -62,8 +66,9 @@ export default function JwtRegisterView() {
       await register?.({ ...data, companyRole });
       router.push(PATH_AFTER_REGISTER);
     } catch (error) {
+      setNotificationMessageBox(typeof error === 'string' ? error : error.message);
+      setNotification(true);
       reset();
-      console.log(typeof error === 'string' ? error : error.message);
     }
   });
 
@@ -71,6 +76,13 @@ export default function JwtRegisterView() {
     e.preventDefault();
     router.push(paths.auth.jwt.login);
   };
+
+  useEffect(() => {
+    const roles = ['issuer', 'distributor'];
+    if (!roles.includes(companyRole)) {
+      router.push(paths.auth.selectProfile);
+    }
+  }, [companyRole, router]);
 
   return (
     <Stack spacing={5}>
@@ -181,27 +193,41 @@ export default function JwtRegisterView() {
             <RHFTextField label="Message" name="message" multiline rows={6} />
           </Stack>
           <Stack direction="row" alignItems="center" gap={1}>
-            <Checkbox size="medium" />
-            <Typography
-              variant="caption"
-              sx={{ textAlign: 'left', color: 'text.disabled', fontSize: '15px' }}
-            >
-              I confirm that i have read and understood the platform’s
-            </Typography>
-            <Link style={{ color: '#69ADFF' }}>Terms of use</Link>
-            <Typography variant="caption" sx={{ color: 'text.disabled', fontSize: '15px' }}>
-              and
-            </Typography>
-            <Link style={{ color: '#69ADFF' }}>privacy policy</Link>
+            <RHFCheckbox
+              size="medium"
+              name="term1"
+              label={
+                <Stack direction="row">
+                  <Typography
+                    variant="caption"
+                    sx={{ textAlign: 'left', color: 'text.disabled', fontSize: '15px' }}
+                  >
+                    I confirm that i have read and understood the platform’s
+                  </Typography>
+                  <Link style={{ color: '#69ADFF' }}>Terms of use</Link>
+                  <Typography variant="caption" sx={{ color: 'text.disabled', fontSize: '15px' }}>
+                    and
+                  </Typography>
+                  <Link style={{ color: '#69ADFF' }}>privacy policy</Link>
+                </Stack>
+              }
+            />
           </Stack>
           <Stack direction="row" alignItems="center" gap={1}>
-            <Checkbox size="medium" />
-            <Typography
-              variant="caption"
-              sx={{ textAlign: 'left', color: 'text.disabled', fontSize: '15px' }}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing and
-            </Typography>
+            <RHFCheckbox
+              size="medium"
+              name="term2"
+              label={
+                <Stack direction="row">
+                  <Typography
+                    variant="caption"
+                    sx={{ textAlign: 'left', color: 'text.disabled', fontSize: '15px' }}
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipiscing and
+                  </Typography>
+                </Stack>
+              }
+            />
           </Stack>
           <Stack sx={{ marginLeft: '1px', marginTop: '20px' }}>
             <ReCAPTCHA theme="light" sitekey="Your client site key" />
@@ -243,6 +269,15 @@ export default function JwtRegisterView() {
             </Stack>
           </Stack>
         </FormProvider>
+        <Snackbar
+          open={notification}
+          autoHideDuration={1200}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <Alert severity="error" variant="filled" sx={{ width: '100%' }}>
+            {notificationMessageBox}
+          </Alert>
+        </Snackbar>
       </Stack>
     </Stack>
   );

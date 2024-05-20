@@ -29,7 +29,7 @@ const NavItem = forwardRef(
       active,
       hasChild,
       externalLink,
-      currentRole = 'admin',
+      currentRole,
       ...other
     },
     ref

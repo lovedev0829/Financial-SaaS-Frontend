@@ -46,7 +46,7 @@ function Group({ subheader, items, slotProps }) {
 
   return (
     <Stack sx={{ px: 2 }}>
-      {subheader ? (
+      {subheader && items.length ? (
         <>
           <ListSubheader
             disableGutters

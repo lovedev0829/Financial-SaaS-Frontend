@@ -15,30 +15,40 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { paths } from 'src/routes/paths';
 
 const ICONS = {
-  dashboard: <DashboardIcon/>,
-  analysis: <InsertChartIcon/>,
+  dashboard: <DashboardIcon />,
+  analysis: <InsertChartIcon />,
   issuanceRegister: <EscalatorIcon />,
   distributorRegister: <AccountTreeIcon />,
-  issuanceRrouter:<InventoryIcon />,
+  issuanceRrouter: <InventoryIcon />,
   issuanceTracking: <MonitorHeartIcon />,
-  manageUsers: <PeopleIcon/>,
+  manageUsers: <PeopleIcon />,
   profile: <Person2Icon />,
-  setting:<SettingsIcon/>,
-  customer:<SupportAgentIcon/>,
-  logout: <LogoutIcon />
-
+  setting: <SettingsIcon />,
+  customer: <SupportAgentIcon />,
+  logout: <LogoutIcon />,
 };
 
 export function useNavData() {
   const data = useMemo(
     () => [
-
       // General
       {
         subheader: 'GENERAL',
         items: [
-          { title: 'Dashboard', path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: 'Analysis and Reports', path: paths.dashboard.analysis, icon: ICONS.analysis },
+          {
+            title: 'Dashboard',
+            path: paths.dashboard.root,
+            icon: ICONS.dashboard,
+            roles: ['admin', 'master', 'user'],
+            companyRoles: ['issuer', 'distributor', 'admin'],
+          },
+          {
+            title: 'Analysis and Reports',
+            path: paths.dashboard.analysis,
+            icon: ICONS.analysis,
+            roles: ['admin', 'master', 'user'],
+            companyRoles: ['issuer', 'distributor', 'admin'],
+          },
         ],
       },
 
@@ -50,39 +60,56 @@ export function useNavData() {
             title: 'Issuance Registration',
             path: paths.dashboard.issuance.register,
             icon: ICONS.issuanceRegister,
+            roles: ['master'],
+            companyRoles: ['issuer', 'distributor'],
           },
           {
             title: 'Distributor Registration',
             path: paths.dashboard.distributor.register,
             icon: ICONS.distributorRegister,
-          }
+            roles: ['master'],
+            companyRoles: ['issuer', 'distributor'],
+          },
+          {
+            title: 'Company Prospect',
+            path: paths.dashboard.company.prospect,
+            icon: ICONS.distributorRegister,
+            roles: ['admin'],
+            companyRoles: ['admin'],
+          },
         ],
       },
-      
-       // Workflow
-       {
+
+      // Workflow
+      {
         subheader: 'WORKFLOW',
         items: [
           {
             title: 'Issuance Router',
             path: paths.dashboard.issuance.router,
             icon: ICONS.issuanceRrouter,
+            roles: ['master'],
+            companyRoles: ['issuer', 'distributor'],
           },
           {
             title: 'Issuance Tracking',
             path: paths.dashboard.issuance.track,
             icon: ICONS.issuanceTracking,
-          }
+            roles: ['master'],
+            companyRoles: ['issuer', 'distributor'],
+          },
         ],
       },
-       // Workflow
-       {
+      // Workflow
+      {
         subheader: 'USERS SETTINGS',
         items: [
           {
             title: 'Manage Users',
             path: paths.dashboard.user,
-            icon: ICONS.manageUsers ,
+            icon: ICONS.manageUsers,
+            roles: ['master'],
+            companyRoles: ['issuer', 'distributor'],
           },
         ],
       },

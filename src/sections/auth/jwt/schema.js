@@ -18,4 +18,8 @@ export const RegisterSchema = Yup.object().shape({
   confirmEmail: Yup.string()
     .required('confirm Email is required')
     .oneOf([Yup.ref('email')], "Email's not match"),
+  term1: Yup.bool() // use bool instead of boolean
+    .oneOf([true], 'You must accept the terms and conditions'),
+  term2: Yup.bool() // use bool instead of boolean
+    .oneOf([true], 'You must accept the terms and conditions'),
 });
