@@ -30,11 +30,11 @@ export default function UserTableFiltersResult({
 
   const handleRemoveRole = useCallback(
     (inputValue) => {
-      const newValue = filters.role.filter((item) => item !== inputValue);
+      const newValue = filters.company_role.filter((item) => item !== inputValue);
 
-      onFilters('role', newValue);
+      onFilters('company_role', newValue);
     },
-    [filters.role, onFilters]
+    [filters.company_role, onFilters]
   );
 
   return (
@@ -53,9 +53,9 @@ export default function UserTableFiltersResult({
           </Block>
         )}
 
-        {!!filters.role.length && (
-          <Block label="Role:">
-            {filters.role.map((item) => (
+        {!!filters.company_role.length && (
+          <Block label="Company Role:">
+            {filters.company_role.map((item) => (
               <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRole(item)} />
             ))}
           </Block>

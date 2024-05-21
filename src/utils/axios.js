@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SERVER_URL } from 'src/config-global';
 
 // ----------------------------------------------------------------------
-console.log(SERVER_URL);
+
 const axiosInstance = axios.create({ baseURL: SERVER_URL });
 
 axiosInstance.interceptors.response.use(
@@ -30,5 +30,9 @@ export const endpoints = {
     me: '/api/auth/me',
     login: '/api/auth/login',
     register: '/api/auth/signup',
+  },
+  company: {
+    prospect: '/api/company/prospects',
+    userStatusUpdate: '/api/company/user/status',
   },
 };

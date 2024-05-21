@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -13,12 +13,9 @@ import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _roles, _userList } from 'src/_mock';
+import { useGetCompanyProspects } from 'src/api/company';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -42,7 +39,7 @@ import ProspectTableToolbar from './prospect-table-toolbar';
 import ProspectTableFiltersResult from './prospect-table-filters-result';
 
 export const USER_STATUS_OPTIONS = [
-  { value: 'active', label: 'Active' },
+  { value: 'approved', label: 'Approved' },
   { value: 'pending', label: 'Pending' },
   { value: 'rejected', label: 'Rejected' },
 ];
@@ -50,17 +47,23 @@ export const USER_STATUS_OPTIONS = [
 const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name' },
-  { id: 'phoneNumber', label: 'Phone Number', width: 180 },
+  { id: 'name', label: 'Name', width: 20 },
+  { id: 'company_id', label: 'Company Code', width: 300, minWidth: 140 },
   { id: 'company', label: 'Company', width: 220 },
-  { id: 'role', label: 'Role', width: 180 },
+  { id: 'cnpj', label: 'CNPJ', width: 220 },
+  { id: 'call_phone', label: 'Phone Number', width: 180 },
+  { id: 'site', label: 'Site', width: 220 },
+  { id: 'company_role', label: 'Company Role', width: 180, minWidth: 140 },
   { id: 'status', label: 'Status', width: 100 },
+  { id: 'created_at', label: 'Requested Date', width: 200, minWidth: 140 },
   { id: '', width: 88 },
 ];
 
+const _roles = ['issuer', 'distributor'];
+
 const defaultFilters = {
-  name: '',
-  role: [],
+  first_name: '',
+  company_role: [],
   status: 'all',
 };
 
@@ -70,11 +73,10 @@ export default function CompanyProspectView() {
 
   const table = useTable();
 
-  const router = useRouter();
-
   const confirm = useBoolean();
+  const { users, mutate } = useGetCompanyProspects();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState(users);
 
   const [filters, setFilters] = useState(defaultFilters);
 
@@ -136,19 +138,17 @@ export default function CompanyProspectView() {
     });
   }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
 
-  const handleEditRow = useCallback(
-    (id) => {
-      router.push(paths.dashboard.user.edit(id));
-    },
-    [router]
-  );
-
   const handleFilterStatus = useCallback(
     (event, newValue) => {
       handleFilters('status', newValue);
     },
     [handleFilters]
   );
+
+  useEffect(() => {
+    setTableData(users);
+  }, [users]);
+
   return (
     <>
       <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -173,12 +173,13 @@ export default function CompanyProspectView() {
                       ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
                     }
                     color={
-                      (tab.value === 'active' && 'success') ||
+                      (tab.value === 'approved' && 'success') ||
                       (tab.value === 'pending' && 'warning') ||
+                      (tab.value === 'rejected' && 'error') ||
                       'default'
                     }
                   >
-                    {['active', 'pending', 'rejected'].includes(tab.value)
+                    {['approved', 'pending', 'rejected'].includes(tab.value)
                       ? tableData.filter((user) => user.status === tab.value).length
                       : tableData.length}
                   </Label>
@@ -256,7 +257,7 @@ export default function CompanyProspectView() {
                         selected={table.selected.includes(row.id)}
                         onSelectRow={() => table.onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
+                        refreshTable={() => mutate()}
                       />
                     ))}
 
@@ -311,7 +312,7 @@ export default function CompanyProspectView() {
 }
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { name, status, role } = filters;
+  const { first_name, status, company_role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -323,9 +324,9 @@ function applyFilter({ inputData, comparator, filters }) {
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (name) {
+  if (first_name) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+      (user) => user.first_name.toLowerCase().indexOf(first_name.toLowerCase()) !== -1
     );
   }
 
@@ -333,8 +334,8 @@ function applyFilter({ inputData, comparator, filters }) {
     inputData = inputData.filter((user) => user.status === status);
   }
 
-  if (role.length) {
-    inputData = inputData.filter((user) => role.includes(user.role));
+  if (company_role.length) {
+    inputData = inputData.filter((user) => company_role.includes(user.company_role));
   }
 
   return inputData;
