@@ -32,6 +32,7 @@ export const endpoints = {
     register: '/api/auth/signup',
   },
   company: {
+    list: '/api/company/list',
     prospect: '/api/company/prospects',
     userStatusUpdate: '/api/company/user/status',
   },

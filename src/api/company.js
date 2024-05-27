@@ -24,6 +24,25 @@ export function useGetCompanyProspects() {
   return memoizedValue;
 }
 
+export function useGetCompanyies() {
+  const URL = endpoints.company.list;
+
+  const { data, isLoading, error, isValidating, mutate } = useSWR(URL, fetcher);
+  const memoizedValue = useMemo(
+    () => ({
+      companies: data?.companies || [],
+      companiesLoading: isLoading,
+      companiesError: error,
+      companiesValidating: isValidating,
+      mutate,
+      companiesEmpty: !isLoading && !data?.companies.length,
+    }),
+    [data?.companies, error, isLoading, isValidating, mutate]
+  );
+
+  return memoizedValue;
+}
+
 export function updateCompanyProspectStatus(params) {
   const URL = endpoints.company.userStatusUpdate;
 

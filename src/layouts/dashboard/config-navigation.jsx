@@ -4,6 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Person2Icon from '@mui/icons-material/Person2';
 import SettingsIcon from '@mui/icons-material/Settings';
+import BusinessIcon from '@mui/icons-material/Business';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EscalatorIcon from '@mui/icons-material/Escalator';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -26,6 +27,7 @@ const ICONS = {
   setting: <SettingsIcon />,
   customer: <SupportAgentIcon />,
   logout: <LogoutIcon />,
+  company: <BusinessIcon />,
 };
 
 export function useNavData() {
@@ -71,9 +73,9 @@ export function useNavData() {
             companyRoles: ['issuer', 'distributor'],
           },
           {
-            title: 'Company Prospect',
-            path: paths.dashboard.company.prospect,
-            icon: ICONS.distributorRegister,
+            title: 'Company',
+            path: paths.dashboard.company.manage,
+            icon: ICONS.company,
             roles: ['admin'],
             companyRoles: ['admin'],
           },
@@ -97,6 +99,13 @@ export function useNavData() {
             icon: ICONS.issuanceTracking,
             roles: ['master'],
             companyRoles: ['issuer', 'distributor'],
+          },
+          {
+            title: 'Company Prospect',
+            path: paths.dashboard.company.prospect,
+            icon: ICONS.distributorRegister,
+            roles: ['admin'],
+            companyRoles: ['admin'],
           },
         ],
       },
