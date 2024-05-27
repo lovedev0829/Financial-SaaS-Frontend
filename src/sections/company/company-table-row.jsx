@@ -6,7 +6,6 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
@@ -19,7 +18,7 @@ import ComapnyQuickEditForm from './company-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, refreshTable }) {
+export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRow, refreshTable }) {
   const {
     company_id,
     company_nick_name,
@@ -35,7 +34,6 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
-
   const popover = usePopover();
 
   return (
@@ -63,7 +61,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
-              <SettingsOutlinedIcon />
+              <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Remove User" placement="top" arrow>
@@ -81,7 +79,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
       </TableRow>
 
       <ComapnyQuickEditForm
-        currentUser={row}
+        currentCompany={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}
         refreshTable={refreshTable}
@@ -102,7 +100,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
   );
 }
 
-UserTableRow.propTypes = {
+CompanyTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
   onSelectRow: PropTypes.func,
   row: PropTypes.object,

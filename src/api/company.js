@@ -57,3 +57,50 @@ export function updateCompanyProspectStatus(params) {
       });
   });
 }
+
+export function deleteCompany(ids) {
+  const URL = endpoints.company.delete;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .post(URL, {
+        selectedIds: ids,
+      })
+      .then(() => {
+        resolve({ status: 'success' });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function updateCompany(params) {
+  const URL = endpoints.company.update;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .post(URL, params)
+      .then(() => {
+        resolve({ status: 'success' });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function createCompany(params) {
+  const URL = endpoints.company.create;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .post(URL, params)
+      .then(() => {
+        resolve({ status: 'success' });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

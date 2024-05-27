@@ -47,11 +47,9 @@ const TABLE_HEAD = [
   { id: 'company', label: 'Company', width: 220 },
   { id: 'cnpj', label: 'CNPJ', width: 220 },
   { id: 'call_phone', label: 'Phone Number', width: 180 },
-  { id: 'site', label: 'Site', width: 220 },
   { id: 'company_role', label: 'Company Role', width: 180, minWidth: 140 },
   { id: 'role', label: 'User Role', width: 180, minWidth: 140 },
   { id: 'status', label: 'Status', width: 100 },
-  { id: 'created_at', label: 'Requested Date', width: 200, minWidth: 140 },
   { id: '', width: 88 },
 ];
 

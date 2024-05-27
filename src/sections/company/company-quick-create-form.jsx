@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,17 +15,17 @@ import DialogContent from '@mui/material/DialogContent';
 
 import { COMPANY_STATUS_OPTIONS } from 'src/utils/common';
 
-import { updateCompany } from 'src/api/company';
+import { createCompany } from 'src/api/company';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect, RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function ComapnyQuickEditForm({ currentCompany, open, onClose, refreshTable }) {
+export default function ComapnyQuickCreateForm({ open, onClose, refreshTable }) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const EditUserSchema = Yup.object().shape({
+  const NewUserSchema = Yup.object().shape({
     company_id: Yup.string().required('Company Id is required'),
     company_name: Yup.string().required('Company Name is required'),
     company_nick_name: Yup.string().required('Company Nick Name is required'),
@@ -41,41 +40,41 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
 
   const defaultValues = useMemo(
     () => ({
-      company_id: currentCompany?.company_id || '',
-      company_name: currentCompany?.company_name || '',
-      company_nick_name: currentCompany?.company_nick_name || '',
-      cnpj: currentCompany?.cnpj || '',
-      institution_type: currentCompany?.institution_type || '',
-      company_address: currentCompany?.company_address || '',
-      business_email: currentCompany?.business_email || '',
-      status: currentCompany?.status || '',
-      cetip_account_num: currentCompany?.cetip_account_num || '',
+      company_id: '',
+      company_name: '',
+      company_nick_name: '',
+      cnpj: '',
+      institution_type: '',
+      company_address: '',
+      business_email: '',
+      status: '',
+      cetip_account_num: '',
     }),
-    [currentCompany]
+    []
   );
 
   const methods = useForm({
-    resolver: yupResolver(EditUserSchema),
+    resolver: yupResolver(NewUserSchema),
     defaultValues,
   });
 
   const {
+    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    const params = { id: currentCompany.id, ...data };
     try {
-      await updateCompany(params)
+      await createCompany(data)
         .then(() => {
+          reset();
           refreshTable();
-          enqueueSnackbar('Update success!');
+          enqueueSnackbar('Create success!');
           onClose();
         })
         .catch((error) => {
-          alert(error?.message, { variant: 'error' });
-          onClose();
+          alert('Something went wrong', { variant: 'error' });
         });
     } catch (error) {
       console.error(error);
@@ -93,17 +92,14 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Quick Update</DialogTitle>
+        <DialogTitle>Quick Create Company</DialogTitle>
 
         <DialogContent>
-          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Account is waiting for confirmation
-          </Alert>
-
           <Box
             rowGap={3}
             columnGap={2}
             display="grid"
+            marginTop={1}
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',
               sm: 'repeat(2, 1fr)',
@@ -137,7 +133,7 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Update
+            Create
           </LoadingButton>
         </DialogActions>
       </FormProvider>
@@ -145,9 +141,8 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
   );
 }
 
-ComapnyQuickEditForm.propTypes = {
+ComapnyQuickCreateForm.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  currentCompany: PropTypes.object,
   refreshTable: PropTypes.func,
 };

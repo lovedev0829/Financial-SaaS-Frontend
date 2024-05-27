@@ -9,14 +9,10 @@ import Button from '@mui/material/Button';
 
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
-export default function UserTableFiltersResult({
+export default function CompanyTableFiltersResult({
   filters,
   onFilters,
-  //
   onResetFilters,
-  //
   results,
   ...other
 }) {
@@ -27,15 +23,6 @@ export default function UserTableFiltersResult({
   const handleRemoveStatus = useCallback(() => {
     onFilters('status', 'all');
   }, [onFilters]);
-
-  const handleRemoveRole = useCallback(
-    (inputValue) => {
-      const newValue = filters.company_role.filter((item) => item !== inputValue);
-
-      onFilters('company_role', newValue);
-    },
-    [filters.company_role, onFilters]
-  );
 
   return (
     <Stack spacing={1.5} {...other}>
@@ -50,14 +37,6 @@ export default function UserTableFiltersResult({
         {filters.status !== 'all' && (
           <Block label="Status:">
             <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
-          </Block>
-        )}
-
-        {!!filters.company_role.length && (
-          <Block label="Company Role:">
-            {filters.company_role.map((item) => (
-              <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRole(item)} />
-            ))}
           </Block>
         )}
 
@@ -79,7 +58,7 @@ export default function UserTableFiltersResult({
   );
 }
 
-UserTableFiltersResult.propTypes = {
+CompanyTableFiltersResult.propTypes = {
   filters: PropTypes.object,
   onFilters: PropTypes.func,
   onResetFilters: PropTypes.func,

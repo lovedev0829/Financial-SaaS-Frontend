@@ -1,20 +1,27 @@
+import isEqual from 'lodash/isEqual';
 import { useState, useEffect, useCallback } from 'react';
 
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import { CardHeader } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
+import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
+import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { useGetCompanyies } from 'src/api/company';
+import { COMPANY_STATUS_OPTIONS } from 'src/utils/common';
 
+import { deleteCompany, useGetCompanyies } from 'src/api/company';
+
+import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
@@ -24,6 +31,7 @@ import {
   useTable,
   emptyRows,
   TableNoData,
+  getComparator,
   TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
@@ -31,10 +39,13 @@ import {
 } from 'src/components/table';
 
 import CompanyTableRow from './company-table-row';
+import CompanyTableToolbar from './company-table-toolbar';
+import ComapnyQuickCreateForm from './company-quick-create-form';
+import CompanyTableFiltersResult from './company-table-filters-result';
 
 const TABLE_HEAD = [
-  { id: 'company_id', label: 'Company Code', width: 300, minWidth: 140 },
   { id: 'company_name', label: 'Company', width: 220 },
+  { id: 'company_id', label: 'Company Code', width: 300, minWidth: 140 },
   { id: 'cnpj', label: 'CNPJ', width: 220 },
   { id: 'institution_type', label: 'Institution', width: 200 },
   { id: 'company_address', label: 'Address', width: 220 },
@@ -45,6 +56,13 @@ const TABLE_HEAD = [
   { id: '', width: 88 },
 ];
 
+const defaultFilters = {
+  companyName: '',
+  status: 'all',
+};
+
+const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...COMPANY_STATUS_OPTIONS];
+
 export default function CompanyView() {
   const settings = useSettingsContext();
   const { enqueueSnackbar } = useSnackbar();
@@ -52,23 +70,55 @@ export default function CompanyView() {
   const table = useTable();
 
   const confirm = useBoolean();
+  const quickCreate = useBoolean();
+
   const { companies, mutate } = useGetCompanyies();
   const [tableData, setTableData] = useState(companies);
 
-  const dataInPage = tableData.slice(
+  const [filters, setFilters] = useState(defaultFilters);
+
+  const dataFiltered = applyFilter({
+    inputData: tableData,
+    comparator: getComparator(table.order, table.orderBy),
+    filters,
+  });
+
+  const dataInPage = dataFiltered.slice(
     table.page * table.rowsPerPage,
     table.page * table.rowsPerPage + table.rowsPerPage
   );
 
   const denseHeight = table.dense ? 56 : 56 + 20;
 
-  const notFound = !tableData.length || !tableData.length;
+  const canReset = !isEqual(defaultFilters, filters);
+
+  const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
+
+  const handleFilters = useCallback(
+    (name, value) => {
+      table.onResetPage();
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    [table]
+  );
+
+  const handleResetFilters = useCallback(() => {
+    setFilters(defaultFilters);
+  }, []);
 
   const handleDeleteRow = useCallback(
-    (id) => {
+    async (id) => {
       const deleteRow = tableData.filter((row) => row.id !== id);
-
-      enqueueSnackbar('Delete success!');
+      await deleteCompany(id)
+        .then(() => {
+          enqueueSnackbar('Delete success!');
+        })
+        .catch(() => {
+          enqueueSnackbar('Something went wrong');
+        });
 
       setTableData(deleteRow);
 
@@ -77,10 +127,16 @@ export default function CompanyView() {
     [dataInPage.length, enqueueSnackbar, table, tableData]
   );
 
-  const handleDeleteRows = useCallback(() => {
+  const handleDeleteRows = useCallback(async () => {
+    const selectedIds = table.selected.join(',');
     const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-
-    enqueueSnackbar('Delete success!');
+    await deleteCompany(selectedIds)
+      .then(() => {
+        enqueueSnackbar('Delete success!');
+      })
+      .catch(() => {
+        enqueueSnackbar('Something went wrong');
+      });
 
     setTableData(deleteRows);
 
@@ -89,6 +145,13 @@ export default function CompanyView() {
       totalRowsFiltered: tableData.length,
     });
   }, [enqueueSnackbar, table, tableData]);
+
+  const handleFilterStatus = useCallback(
+    (event, newValue) => {
+      handleFilters('status', newValue);
+    },
+    [handleFilters]
+  );
 
   useEffect(() => {
     setTableData(companies);
@@ -107,20 +170,66 @@ export default function CompanyView() {
                 variant="contained"
                 color="primary"
                 startIcon={<AddCircleIcon />}
+                onClick={quickCreate.onTrue}
               >
                 Add New
               </Button>
             }
           />
+          <Tabs
+            value={filters.status}
+            onChange={handleFilterStatus}
+            sx={{
+              px: 2.5,
+              boxShadow: (theme) => `inset 0 -2px 0 0 ${alpha(theme.palette.grey[500], 0.08)}`,
+            }}
+          >
+            {STATUS_OPTIONS.map((tab) => (
+              <Tab
+                key={tab.value}
+                iconPosition="end"
+                value={tab.value}
+                label={tab.label}
+                icon={
+                  <Label
+                    variant={
+                      ((tab.value === 'all' || tab.value === filters.status) && 'filled') || 'soft'
+                    }
+                    color={
+                      (tab.value === 'active' && 'success') ||
+                      (tab.value === 'inactive' && 'warning') ||
+                      'default'
+                    }
+                  >
+                    {['active', 'inactive'].includes(tab.value)
+                      ? tableData.filter((company) => company.status === tab.value).length
+                      : tableData.length}
+                  </Label>
+                }
+              />
+            ))}
+          </Tabs>
+          <CompanyTableToolbar filters={filters} onFilters={handleFilters} />
+          {canReset && (
+            <CompanyTableFiltersResult
+              filters={filters}
+              onFilters={handleFilters}
+              //
+              onResetFilters={handleResetFilters}
+              //
+              results={dataFiltered.length}
+              sx={{ p: 2.5, pt: 0 }}
+            />
+          )}
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
             <TableSelectedAction
               dense={table.dense}
               numSelected={table.selected.length}
-              rowCount={tableData.length}
+              rowCount={dataFiltered.length}
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  tableData.map((row) => row.id)
+                  dataFiltered.map((row) => row.id)
                 )
               }
               action={
@@ -138,19 +247,19 @@ export default function CompanyView() {
                   order={table.order}
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
+                  rowCount={dataFiltered.length}
                   numSelected={table.selected.length}
                   onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      dataFiltered.map((row) => row.id)
                     )
                   }
                 />
 
                 <TableBody>
-                  {tableData
+                  {dataFiltered
                     .slice(
                       table.page * table.rowsPerPage,
                       table.page * table.rowsPerPage + table.rowsPerPage
@@ -168,7 +277,7 @@ export default function CompanyView() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(table.page, table.rowsPerPage, tableData.length)}
+                    emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
                   />
 
                   <TableNoData notFound={notFound} />
@@ -178,16 +287,23 @@ export default function CompanyView() {
           </TableContainer>
 
           <TablePaginationCustom
-            count={tableData.length}
+            count={dataFiltered.length}
             page={table.page}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}
             onRowsPerPageChange={table.onChangeRowsPerPage}
+            //
             dense={table.dense}
             onChangeDense={table.onChangeDense}
           />
         </Card>
       </Container>
+
+      <ComapnyQuickCreateForm
+        open={quickCreate.value}
+        onClose={quickCreate.onFalse}
+        refreshTable={() => mutate()}
+      />
 
       <ConfirmDialog
         open={confirm.value}
@@ -213,4 +329,30 @@ export default function CompanyView() {
       />
     </>
   );
+}
+
+function applyFilter({ inputData, comparator, filters }) {
+  const { companyName, status } = filters;
+
+  const stabilizedThis = inputData.map((el, index) => [el, index]);
+
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+
+  inputData = stabilizedThis.map((el) => el[0]);
+
+  if (companyName) {
+    inputData = inputData.filter(
+      (company) => company.company_name.toLowerCase().indexOf(companyName.toLowerCase()) !== -1
+    );
+  }
+
+  if (status !== 'all') {
+    inputData = inputData.filter((user) => user.status === status);
+  }
+
+  return inputData;
 }

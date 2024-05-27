@@ -33,7 +33,11 @@ export const endpoints = {
   },
   company: {
     list: '/api/company/list',
+    delete: '/api/company/delete',
+    update: '/api/company/update',
+    create: '/api/company/create',
     prospect: '/api/company/prospects',
+    deleteProspects: '/api/company/prospects/delete',
     userStatusUpdate: '/api/company/user/status',
   },
 };

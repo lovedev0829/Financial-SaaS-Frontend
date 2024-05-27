@@ -31,11 +31,9 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
     company,
     cnpj,
     call_phone,
-    site,
     company_role,
     role,
     status,
-    created_at,
   } = row;
 
   const fullName = `${first_name} ${last_name}`;
@@ -73,7 +71,6 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{cnpj}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{call_phone}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{site}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_role}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
 
@@ -90,7 +87,6 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
             {status}
           </Label>
         </TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{created_at}</TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           {/* {status === 'pending' ? (
             <> */}
