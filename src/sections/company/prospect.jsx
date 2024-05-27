@@ -35,14 +35,9 @@ import {
 } from 'src/components/table';
 
 import ProspectTableRow from './prospect-table-row';
+import { USER_STATUS_OPTIONS } from '../../utils/common';
 import ProspectTableToolbar from './prospect-table-toolbar';
 import ProspectTableFiltersResult from './prospect-table-filters-result';
-
-export const USER_STATUS_OPTIONS = [
-  { value: 'approved', label: 'Approved' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'rejected', label: 'Rejected' },
-];
 
 const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...USER_STATUS_OPTIONS];
 
@@ -54,6 +49,7 @@ const TABLE_HEAD = [
   { id: 'call_phone', label: 'Phone Number', width: 180 },
   { id: 'site', label: 'Site', width: 220 },
   { id: 'company_role', label: 'Company Role', width: 180, minWidth: 140 },
+  { id: 'role', label: 'User Role', width: 180, minWidth: 140 },
   { id: 'status', label: 'Status', width: 100 },
   { id: 'created_at', label: 'Requested Date', width: 200, minWidth: 140 },
   { id: '', width: 88 },

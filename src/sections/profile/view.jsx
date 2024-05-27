@@ -13,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CardContent from '@mui/material/CardContent';
 
-import { useMockedUser } from 'src/hooks/use-mocked-user';
-
 import { fData } from 'src/utils/format-number';
 
 import { useSnackbar } from 'src/components/snackbar';
@@ -25,7 +23,7 @@ export default function User() {
   const settings = useSettingsContext();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useMockedUser();
+  const { user } = {};
 
   const UpdateUserSchema = Yup.object().shape({
     firstName: Yup.string().required('firstName is required'),

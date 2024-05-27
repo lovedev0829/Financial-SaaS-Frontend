@@ -18,22 +18,19 @@ import { updateCompanyProspectStatus } from 'src/api/company';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFSelect } from 'src/components/hook-form';
+
+import { USER_STATUS_OPTIONS } from '../../utils/common';
 // ----------------------------------------------------------------------
 
 export default function UserQuickEditForm({ currentUser, open, onClose, refreshTable }) {
   const { enqueueSnackbar } = useSnackbar();
-  const USER_STATUS_OPTIONS = [
-    { value: 'approved', label: 'Approved' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'rejected', label: 'Rejected' },
-  ];
+
   const defaultValues = useMemo(
     () => ({
       status: currentUser?.status,
     }),
     [currentUser]
   );
-
   const methods = useForm({
     defaultValues,
   });
@@ -45,16 +42,23 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const params = { user_id: currentUser.id, ...data };
+      const params = {
+        user_id: currentUser.id,
+        email: currentUser.email,
+        cnpj: currentUser.cnpj,
+        ...data,
+      };
+
       await updateCompanyProspectStatus(params)
         .then(() => {
           refreshTable();
           enqueueSnackbar('Update success!');
+          onClose();
         })
         .catch((error) => {
-          enqueueSnackbar(error);
+          alert(error?.message, { variant: 'error' });
+          onClose();
         });
-      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -81,11 +85,16 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
           <Stack gap={2}>
             <RHFSelect name="status" label="Status">
               {USER_STATUS_OPTIONS.map((status) => (
-                <MenuItem key={status.value} value={status.value}>
+                <MenuItem
+                  key={status.value}
+                  value={status.value}
+                  selected={currentUser.status === status.value}
+                >
                   {status.label}
                 </MenuItem>
               ))}
             </RHFSelect>
+
             <Typography>Message</Typography>
             <CardContent sx={{ height: 320, overflow: 'auto' }}>{currentUser?.message}</CardContent>
           </Stack>

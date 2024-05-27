@@ -33,6 +33,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
     call_phone,
     site,
     company_role,
+    role,
     status,
     created_at,
   } = row;
@@ -66,12 +67,15 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
           />
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_id}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+          {company_id === 0 ? 'Not Registered' : company_id}
+        </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{cnpj}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{call_phone}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{site}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_role}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
 
         <TableCell>
           <Label
@@ -88,13 +92,14 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
         </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{created_at}</TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
+          {/* {status === 'pending' ? (
+            <> */}
           <Tooltip title="Quick Edit" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
               <SettingsOutlinedIcon />
             </IconButton>
           </Tooltip>
-
-          <Tooltip title="Quick Edit" placement="top" arrow>
+          <Tooltip title="Remove User" placement="top" arrow>
             <IconButton
               onClick={() => {
                 confirm.onTrue();
@@ -105,6 +110,8 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
               <Iconify icon="solar:trash-bin-trash-bold" />
             </IconButton>
           </Tooltip>
+          {/* </>
+          ) : null} */}
         </TableCell>
       </TableRow>
 

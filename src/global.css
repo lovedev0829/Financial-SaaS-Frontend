@@ -1,2 +1,14 @@
 /* scrollbar */
 @import 'simplebar-react/dist/simplebar.min.css';
+
+.react-international-phone-country-selector-button {
+  height: 50px !important;
+  width: 56px !important;
+}
+.react-international-phone-country-selector-dropdown {
+  z-index: 999999 !important;
+}
+.react-international-phone-input {
+  width: 100% !important;
+  height: 50px !important;
+}

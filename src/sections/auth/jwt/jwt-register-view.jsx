@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import 'react-international-phone/style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { PhoneInput } from 'react-international-phone';
 
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
@@ -16,7 +18,6 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -118,17 +119,19 @@ export default function JwtRegisterView() {
             />
           </Stack>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
-            <RHFTextField
-              name="callPhone"
-              label="Call Phone"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LocalPhoneOutlinedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Stack sx={{ width: 1 }}>
+              <PhoneInput
+                value={defaultValues.callPhone}
+                name="callPhone"
+                label="Call Phone"
+                defaultCountry="br"
+                style={{
+                  width: '100%',
+                  height: '50px',
+                }}
+              />
+            </Stack>
+
             <RHFTextField
               name="company"
               label="Company"
@@ -230,7 +233,7 @@ export default function JwtRegisterView() {
             />
           </Stack>
           <Stack sx={{ marginLeft: '1px', marginTop: '20px' }}>
-            <ReCAPTCHA theme="light" sitekey="Your client site key" />
+            <ReCAPTCHA theme="light" sitekey="6LdFP-cpAAAAALlMed_fhe3BKr1iyYRgdS84x24E" />
           </Stack>
           <Stack
             direction="row"

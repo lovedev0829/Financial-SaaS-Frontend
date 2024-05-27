@@ -1,8 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 
-import { _bankingRecentTransitions } from 'src/_mock';
-
 import AppWidgetWorld from './app-widget-world';
 import TopIssuancesTbl from './top-issuances-table';
 import AppWidgetSummary from './app-widget-summary';
@@ -128,7 +126,7 @@ export default function DashboardView() {
           <Grid md={12}>
             <TopIssuancesTbl
               title="Top 3 Issuances"
-              tableData={_bankingRecentTransitions}
+              tableData={[]}
               tableLabels={[
                 { id: 'name', label: 'Name' },
                 { id: 'index', label: 'Index' },

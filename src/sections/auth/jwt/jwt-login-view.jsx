@@ -101,7 +101,7 @@ export default function JwtLoginView() {
       <Link variant="body2" color="primary" underline="always" sx={{ alignSelf: 'flex-end' }}>
         Forgot password?
       </Link>
-      <ReCAPTCHA sitekey="6LdZyc4pAAAAACWO5qLVA0MA_mnGKhF_ISULVZVU" />
+      <ReCAPTCHA sitekey="6LdFP-cpAAAAALlMed_fhe3BKr1iyYRgdS84x24E" />
       <LoadingButton
         fullWidth
         size="large"
