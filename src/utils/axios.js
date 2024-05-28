@@ -30,6 +30,8 @@ export const endpoints = {
     me: '/api/auth/me',
     login: '/api/auth/login',
     register: '/api/auth/signup',
+    checkTokenValidation: '/api/auth/validateToken',
+    confirmRegistration: '/api/auth/confirm/register',
   },
   company: {
     list: '/api/company/list',
