@@ -8,7 +8,6 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
@@ -20,33 +19,15 @@ import { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 
 import { SERVER_URL } from '../../config-global';
-import ProspectQuickEditForm from './prospect-quick-edit-form';
-
-// ----------------------------------------------------------------------
+import UserQuickEditForm from './user-quick-edit-form';
 
 export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, refreshTable }) {
-  const {
-    first_name,
-    last_name,
-    avatar,
-    email,
-    company_id,
-    company,
-    call_phone,
-    company_role,
-    role,
-    status,
-    site,
-    created_at,
-  } = row;
-
-  const fullName = `${first_name} ${last_name}`;
-
+  const { first_name, last_name, avatar, email, role, status, created_at } = row;
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
-
   const popover = usePopover();
+  const fullName = `${first_name} ${last_name}`;
 
   return (
     <>
@@ -72,35 +53,26 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
             }}
           />
         </TableCell>
-
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>
-          {company_id === 0 ? 'Not Registered' : company_id}
-        </TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{call_phone}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{site}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_role}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{email}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{role}</TableCell>
-
         <TableCell>
           <Label
             variant="soft"
             color={
-              (status === 'approved' && 'success') ||
-              (status === 'pending' && 'warning') ||
-              (status === 'rejected' && 'error') ||
+              (status === 'enabled' && 'success') ||
+              (status === 'disabled' && 'warning') ||
+              (status === 'blocked' && 'error') ||
               'default'
             }
           >
             {status}
           </Label>
         </TableCell>
-
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{created_at}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>
+        <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
-              <SettingsOutlinedIcon />
+              <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Remove User" placement="top" arrow>
@@ -114,12 +86,10 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
               <Iconify icon="solar:trash-bin-trash-bold" />
             </IconButton>
           </Tooltip>
-          {/* </>
-          ) : null} */}
         </TableCell>
       </TableRow>
 
-      <ProspectQuickEditForm
+      <UserQuickEditForm
         currentUser={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}

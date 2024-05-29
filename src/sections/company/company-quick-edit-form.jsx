@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import MenuItem from '@mui/material/MenuItem';
@@ -96,14 +95,11 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
         <DialogTitle>Quick Update</DialogTitle>
 
         <DialogContent>
-          <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
-            Account is waiting for confirmation
-          </Alert>
-
           <Box
             rowGap={3}
             columnGap={2}
             display="grid"
+            marginTop={2}
             gridTemplateColumns={{
               xs: 'repeat(1, 1fr)',
               sm: 'repeat(2, 1fr)',

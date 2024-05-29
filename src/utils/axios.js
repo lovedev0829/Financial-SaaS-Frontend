@@ -42,4 +42,12 @@ export const endpoints = {
     deleteProspects: '/api/company/prospects/delete',
     userStatusUpdate: '/api/company/user/status',
   },
+  user: {
+    list: '/api/user/list',
+    delete: '/api/user/delete',
+    create: '/api/user/create',
+    update: '/api/user/update',
+    uploadAvatar: '/api/user/upload/avatar',
+    avatarUrl: '/api/user/upload/avatar',
+  },
 };
