@@ -20,7 +20,7 @@ import ComapnyQuickEditForm from './company-quick-edit-form';
 
 export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRow, refreshTable }) {
   const {
-    company_id,
+    company_code,
     company_nick_name,
     cnpj,
     institution_type,
@@ -30,7 +30,6 @@ export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRo
     cetip_account_num,
     created_at,
   } = row;
-
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
@@ -43,11 +42,12 @@ export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRo
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_nick_name}</TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_id}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_code}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{cnpj}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{institution_type}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company_address}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{business_email}</TableCell>
+        <TableCell sx={{ whiteSpace: 'nowrap' }}>{cetip_account_num}</TableCell>
         <TableCell>
           <Label
             variant="soft"
@@ -56,7 +56,7 @@ export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRo
             {status}
           </Label>
         </TableCell>
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{cetip_account_num}</TableCell>
+
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{created_at}</TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Quick Edit" placement="top" arrow>

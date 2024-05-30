@@ -30,7 +30,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
     last_name,
     avatar,
     email,
-    company_id,
+    company_code,
     company,
     call_phone,
     company_role,
@@ -74,7 +74,7 @@ export default function UserTableRow({ row, selected, onSelectRow, onDeleteRow, 
         </TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>
-          {company_id === 0 ? 'Not Registered' : company_id}
+          {company_code === 0 ? 'Not Registered' : company_code}
         </TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{company}</TableCell>
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{call_phone}</TableCell>

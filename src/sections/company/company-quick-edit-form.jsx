@@ -26,7 +26,7 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
   const { enqueueSnackbar } = useSnackbar();
 
   const EditUserSchema = Yup.object().shape({
-    company_id: Yup.string().required('Company Id is required'),
+    company_code: Yup.string().required('Company Code is required'),
     company_name: Yup.string().required('Company Name is required'),
     company_nick_name: Yup.string().required('Company Nick Name is required'),
     cnpj: Yup.string().required('CNPJ is required'),
@@ -40,7 +40,7 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
 
   const defaultValues = useMemo(
     () => ({
-      company_id: currentCompany?.company_id || '',
+      company_code: currentCompany?.company_code || '',
       company_name: currentCompany?.company_name || '',
       company_nick_name: currentCompany?.company_nick_name || '',
       cnpj: currentCompany?.cnpj || '',
@@ -116,7 +116,7 @@ export default function ComapnyQuickEditForm({ currentCompany, open, onClose, re
             <Box sx={{ display: { xs: 'none', sm: 'block' } }} />
 
             <RHFTextField name="company_name" label="Company Name" />
-            <RHFTextField name="company_id" label="Company ID" />
+            <RHFTextField name="company_code" label="Company Code" />
             <RHFTextField name="company_nick_name" label="Company Nick Name" />
             <RHFTextField name="cnpj" label="CNPJ" />
 

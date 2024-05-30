@@ -45,7 +45,7 @@ import CompanyTableFiltersResult from './company-table-filters-result';
 
 const TABLE_HEAD = [
   { id: 'company_name', label: 'Company', width: 220 },
-  { id: 'company_id', label: 'Company Code', width: 300, minWidth: 140 },
+  { id: 'company_code', label: 'Company Code', width: 300, minWidth: 140 },
   { id: 'cnpj', label: 'CNPJ', width: 220 },
   { id: 'institution_type', label: 'Institution', width: 200 },
   { id: 'company_address', label: 'Address', width: 220 },
@@ -112,7 +112,7 @@ export default function CompanyView() {
   const handleDeleteRow = useCallback(
     async (id) => {
       const deleteRow = tableData.filter((row) => row.id !== id);
-      await deleteCompany(id)
+      await deleteCompany(id.toString())
         .then(() => {
           enqueueSnackbar('Delete success!');
         })
@@ -351,7 +351,7 @@ function applyFilter({ inputData, comparator, filters }) {
   }
 
   if (status !== 'all') {
-    inputData = inputData.filter((user) => user.status === status);
+    inputData = inputData.filter((company) => company.status === status);
   }
 
   return inputData;

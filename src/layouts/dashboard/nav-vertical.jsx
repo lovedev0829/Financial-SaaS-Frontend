@@ -24,7 +24,7 @@ import NavToggleButton from '../common/nav-toggle-button';
 export default function NavVertical({ openNav, onCloseNav }) {
   const { user } = useAuthContext();
   const pathname = usePathname();
-
+  console.log(user);
   const lgUp = useResponsive('up', 'lg');
 
   const navData = useNavData();

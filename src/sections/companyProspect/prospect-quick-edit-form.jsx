@@ -43,6 +43,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
   const onSubmit = handleSubmit(async (data) => {
     try {
       const params = {
+        company_role: currentUser.company_role,
         user_id: currentUser.id,
         email: currentUser.email,
         cnpj: currentUser.cnpj,

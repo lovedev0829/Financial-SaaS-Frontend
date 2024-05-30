@@ -29,7 +29,6 @@ export default function UserQuickCreateForm({
   refreshTable,
   masterEmail,
   company_id,
-  company_role,
 }) {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -67,7 +66,6 @@ export default function UserQuickCreateForm({
     let params = {
       masterEmail,
       company_id,
-      company_role,
       firstName: data?.firstName,
       lastName: data?.lastName,
       email: data?.email,
@@ -210,7 +208,6 @@ export default function UserQuickCreateForm({
 
 UserQuickCreateForm.propTypes = {
   company_id: PropTypes.number,
-  company_role: PropTypes.string,
   masterEmail: PropTypes.string,
   open: PropTypes.bool,
   onClose: PropTypes.func,
