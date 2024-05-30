@@ -15,7 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { useGetCompanyProspects } from 'src/api/company';
+import { deleteCompanyProspect, useGetCompanyProspects } from 'src/api/company';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -81,6 +81,8 @@ export default function CompanyProspectView() {
     filters,
   });
 
+  console.log(tableData);
+
   const dataInPage = dataFiltered.slice(
     table.page * table.rowsPerPage,
     table.page * table.rowsPerPage + table.rowsPerPage
@@ -108,8 +110,16 @@ export default function CompanyProspectView() {
   }, []);
 
   const handleDeleteRow = useCallback(
-    (id) => {
+    async (id) => {
       const deleteRow = tableData.filter((row) => row.id !== id);
+
+      await deleteCompanyProspect(id)
+        .then(() => {
+          enqueueSnackbar('Delete success!');
+        })
+        .catch(() => {
+          enqueueSnackbar('Something went wrong');
+        });
 
       enqueueSnackbar('Delete success!');
 
@@ -120,8 +130,18 @@ export default function CompanyProspectView() {
     [dataInPage.length, enqueueSnackbar, table, tableData]
   );
 
-  const handleDeleteRows = useCallback(() => {
+  const handleDeleteRows = useCallback(async () => {
+    const selectedIds = table.selected.join(',');
+
     const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
+
+    await deleteCompanyProspect(selectedIds)
+      .then(() => {
+        enqueueSnackbar('Delete success!');
+      })
+      .catch(() => {
+        enqueueSnackbar('Something went wrong');
+      });
 
     enqueueSnackbar('Delete success!');
 

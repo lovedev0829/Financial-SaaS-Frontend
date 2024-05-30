@@ -43,13 +43,14 @@ export default function ConfirmRegisterView() {
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, setValue } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     const params = { userId, ...data };
     try {
       await confirmRegistration(params)
-        .then(() => {
+        .then((res) => {
+          alert(res.message);
           router.push(paths.auth.jwt.login);
         })
         .catch((error) => {
@@ -66,7 +67,12 @@ export default function ConfirmRegisterView() {
     checkTokenValidation(token)
       .then((res) => {
         if (res.status === 200) {
-          const { id } = res.data;
+          const { id, call_phone, first_name, last_name, company_name } = res.data;
+
+          setValue('firstName', first_name);
+          setValue('lastName', last_name);
+          setValue('company', company_name);
+          setValue('callPhone', call_phone);
           setUserId(id);
         }
       })
@@ -85,6 +91,7 @@ export default function ConfirmRegisterView() {
         <FormProvider methods={methods} onSubmit={onSubmit}>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <RHFTextField
+              disabled
               name="firstName"
               label="First Name"
               InputProps={{
@@ -96,6 +103,7 @@ export default function ConfirmRegisterView() {
               }}
             />
             <RHFTextField
+              disabled
               name="lastName"
               label="Last Name"
               InputProps={{
@@ -109,6 +117,7 @@ export default function ConfirmRegisterView() {
           </Stack>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <RHFTextField
+              disabled
               name="callPhone"
               label="Call Phone"
               InputProps={{
@@ -120,6 +129,7 @@ export default function ConfirmRegisterView() {
               }}
             />
             <RHFTextField
+              disabled
               name="company"
               label="Company"
               InputProps={{

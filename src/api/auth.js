@@ -21,8 +21,8 @@ export function confirmRegistration(params) {
   return new Promise((resolve, reject) => {
     axios
       .post(URL, params)
-      .then(() => {
-        resolve({ status: 'success' });
+      .then((res) => {
+        resolve(res.data);
       })
       .catch((error) => {
         reject(error);

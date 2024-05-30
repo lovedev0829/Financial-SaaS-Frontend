@@ -75,6 +75,23 @@ export function deleteCompany(ids) {
   });
 }
 
+export function deleteCompanyProspect(ids) {
+  const URL = endpoints.company.deleteProspects;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .post(URL, {
+        selectedIds: ids,
+      })
+      .then(() => {
+        resolve({ status: 'success' });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 export function updateCompany(params) {
   const URL = endpoints.company.update;
 

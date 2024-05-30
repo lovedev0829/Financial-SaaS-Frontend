@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import 'react-international-phone/style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { PhoneInput } from 'react-international-phone';
 
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Typography from '@mui/material/Typography';
+import PhoneIcon from '@mui/icons-material/Phone';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
@@ -57,7 +57,6 @@ export default function JwtRegisterView() {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
@@ -69,7 +68,6 @@ export default function JwtRegisterView() {
     } catch (error) {
       setNotificationMessageBox(typeof error === 'string' ? error : error.message);
       setNotification(true);
-      reset();
     }
   });
 
@@ -120,14 +118,15 @@ export default function JwtRegisterView() {
           </Stack>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <Stack sx={{ width: 1 }}>
-              <PhoneInput
-                value={defaultValues.callPhone}
+              <RHFTextField
                 name="callPhone"
                 label="Call Phone"
-                defaultCountry="br"
-                style={{
-                  width: '100%',
-                  height: '50px',
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PhoneIcon />
+                    </InputAdornment>
+                  ),
                 }}
               />
             </Stack>

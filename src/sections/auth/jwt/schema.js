@@ -10,7 +10,12 @@ export const RegisterSchema = Yup.object().shape({
     .min(3, 'Mininum 3 characters')
     .max(32, 'Maximum 50 characters'),
   cnpj: Yup.string().required('CNPJ is required'),
-  callPhone: Yup.string().required('Call Phone Number is required'),
+  callPhone: Yup.string()
+    .required('Call Phone Number is required')
+    .matches(
+      /^(\+?\d{1,2}[\s-]?)?((\d{3})?([\s-]?)(\d{3})[\s-]?(\d{4}|x\d{4}))/,
+      'Invalid phone number format'
+    ),
   company: Yup.string().required('Company is required'),
   email: Yup.string().required('Email is required').email('Email must be a valid email address'),
   confirmEmail: Yup.string()
@@ -23,16 +28,6 @@ export const RegisterSchema = Yup.object().shape({
 });
 
 export const RegisterConfirmSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .required('First Name is required')
-    .min(3, 'Mininum 3 characters')
-    .max(32, 'Maximum 50 characters'),
-  lastName: Yup.string()
-    .required('Last Name is required')
-    .min(3, 'Mininum 3 characters')
-    .max(32, 'Maximum 50 characters'),
-  callPhone: Yup.string().required('Call Phone Number is required'),
-  company: Yup.string().required('Company is required'),
   password: Yup.string().required('Email is required').min(6).max(12),
   confirmPassword: Yup.string()
     .required('confirm password is required')
