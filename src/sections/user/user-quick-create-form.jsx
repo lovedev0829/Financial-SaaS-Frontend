@@ -207,7 +207,7 @@ export default function UserQuickCreateForm({
 }
 
 UserQuickCreateForm.propTypes = {
-  company_id: PropTypes.number,
+  company_id: PropTypes.string,
   masterEmail: PropTypes.string,
   open: PropTypes.bool,
   onClose: PropTypes.func,
