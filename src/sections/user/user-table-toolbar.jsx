@@ -17,7 +17,7 @@ export default function UserTableToolbar({ filters, onFilters }) {
 
   const handleFilterName = useCallback(
     (event) => {
-      onFilters('name', event.target.value);
+      onFilters('filterValues', event.target.value);
     },
     [onFilters]
   );

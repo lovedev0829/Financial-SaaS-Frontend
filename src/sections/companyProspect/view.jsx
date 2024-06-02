@@ -57,7 +57,7 @@ const TABLE_HEAD = [
 const _roles = ['issuer', 'distributor'];
 
 const defaultFilters = {
-  first_name: '',
+  filterValues: '',
   company_role: [],
   status: 'all',
 };
@@ -80,8 +80,6 @@ export default function CompanyProspectView() {
     comparator: getComparator(table.order, table.orderBy),
     filters,
   });
-
-  console.log(tableData);
 
   const dataInPage = dataFiltered.slice(
     table.page * table.rowsPerPage,
@@ -327,7 +325,7 @@ export default function CompanyProspectView() {
 }
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { first_name, status, company_role } = filters;
+  const { filterValues, status, company_role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -338,10 +336,17 @@ function applyFilter({ inputData, comparator, filters }) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (first_name) {
+  if (filterValues) {
     inputData = inputData.filter(
-      (user) => user.first_name.toLowerCase().indexOf(first_name.toLowerCase()) !== -1
+      (user) =>
+        user.first_name.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.last_name.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.company_code.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.company.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.call_phone.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.site.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.role.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.created_at.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1
     );
   }
 

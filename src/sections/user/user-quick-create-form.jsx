@@ -36,7 +36,7 @@ export default function UserQuickCreateForm({
     firstName: Yup.string().min(3).max(10).required('First Name is required'),
     lastName: Yup.string().min(3).max(10).required('Last Name is required'),
     role: Yup.string().required('Role is required'),
-    email: Yup.string().email('Email Address!').required('Email is required'),
+    email: Yup.string().email('Invalid email address!').required('Email is required'),
   });
 
   const defaultValues = useMemo(

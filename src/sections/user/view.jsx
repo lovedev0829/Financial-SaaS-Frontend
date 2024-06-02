@@ -54,7 +54,7 @@ const TABLE_HEAD = [
 ];
 
 const defaultFilters = {
-  name: '',
+  filterValues: '',
   status: 'all',
 };
 const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...EMPLOYEE_STATUS_OPTIONS];
@@ -332,7 +332,7 @@ export default function UserView() {
 }
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { name, status } = filters;
+  const { filterValues, status } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -343,12 +343,14 @@ function applyFilter({ inputData, comparator, filters }) {
   });
 
   inputData = stabilizedThis.map((el) => el[0]);
-
-  if (name) {
+  if (filterValues) {
     inputData = inputData.filter(
       (user) =>
-        user.first_name.toLowerCase().indexOf(name.toLowerCase()) !== -1 ||
-        user.last_name.toLowerCase().indexOf(name.toLowerCase()) !== -1
+        user.first_name.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.last_name.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.email.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.role.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1 ||
+        user.created_at.toLowerCase().indexOf(filterValues.toLowerCase()) !== -1
     );
   }
 

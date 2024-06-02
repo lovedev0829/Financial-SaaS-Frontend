@@ -21,7 +21,7 @@ export default function UserTableFiltersResult({
   ...other
 }) {
   const handleRemoveKeyword = useCallback(() => {
-    onFilters('name', '');
+    onFilters('filterValues', '');
   }, [onFilters]);
 
   const handleRemoveStatus = useCallback(() => {
