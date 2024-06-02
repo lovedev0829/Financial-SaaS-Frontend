@@ -57,7 +57,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
           onClose();
         })
         .catch((error) => {
-          alert(error?.message, { variant: 'error' });
+          enqueueSnackbar(error?.message, { variant: 'error' });
           onClose();
         });
     } catch (error) {
@@ -97,7 +97,16 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
             </RHFSelect>
 
             <Typography>Message</Typography>
-            <CardContent sx={{ height: 320, overflow: 'auto' }}>{currentUser?.message}</CardContent>
+            <CardContent
+              sx={{
+                height: 320,
+                overflow: 'auto',
+                borderRadius: '15px',
+                border: '1px solid #dddddd',
+              }}
+            >
+              {currentUser?.message}
+            </CardContent>
           </Stack>
         </DialogContent>
 

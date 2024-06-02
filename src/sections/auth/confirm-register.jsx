@@ -7,7 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
 import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
@@ -18,6 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 
 import { confirmRegistration, checkTokenValidation } from 'src/api/auth';
 
+import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFCheckbox, RHFTextField } from 'src/components/hook-form';
 
 import { RegisterConfirmSchema } from './jwt/schema';
@@ -37,7 +41,9 @@ export default function ConfirmRegisterView() {
   const router = useRouter();
   const location = useLocation();
   const [userId, setUserId] = useState(null);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const methods = useForm({
     resolver: yupResolver(RegisterConfirmSchema),
     defaultValues,
@@ -50,8 +56,10 @@ export default function ConfirmRegisterView() {
     try {
       await confirmRegistration(params)
         .then((res) => {
-          alert(res.message);
-          router.push(paths.auth.jwt.login);
+          enqueueSnackbar(res.message, { variant: 'success' });
+          setTimeout(() => {
+            router.push(paths.auth.jwt.login);
+          }, 1000);
         })
         .catch((error) => {
           console.error(error);
@@ -60,6 +68,10 @@ export default function ConfirmRegisterView() {
       console.error(error);
     }
   });
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleClickShowConfirmPassword = () => setConfirmShowPassword((show) => !show);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -143,10 +155,23 @@ export default function ConfirmRegisterView() {
           </Stack>
           <Stack spacing={10} sx={{ width: 1, mb: 3 }} direction="row">
             <RHFTextField
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               label="Password"
               name="password"
               InputProps={{
+                error: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={(event) => event.preventDefault()}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
                 startAdornment: (
                   <InputAdornment position="start">
                     <HttpsOutlinedIcon />
@@ -155,10 +180,23 @@ export default function ConfirmRegisterView() {
               }}
             />
             <RHFTextField
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               label="Confirm Password"
               name="confirmPassword"
               InputProps={{
+                error: true,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={(event) => event.preventDefault()}
+                      edge="end"
+                    >
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
                 startAdornment: (
                   <InputAdornment position="start">
                     <HttpsOutlinedIcon />

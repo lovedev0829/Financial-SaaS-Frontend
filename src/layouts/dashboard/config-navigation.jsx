@@ -98,7 +98,7 @@ export function useNavData() {
             companyRoles: ['issuer', 'distributor'],
           },
           {
-            title: 'Company Prospect',
+            title: 'Prospect',
             path: paths.dashboard.company.prospect,
             icon: ICONS.distributorRegister,
             roles: ['superAdmin'],
@@ -133,7 +133,7 @@ export function useNavData() {
             icon: ICONS.setting,
           },
           {
-            title: 'Customer Support',
+            title: 'Support',
             path: paths.dashboard.customer,
             icon: ICONS.customer,
           },

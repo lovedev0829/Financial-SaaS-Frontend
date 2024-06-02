@@ -80,18 +80,18 @@ export default function UserQuickCreateForm({
             params = { ...params, avatar: res };
           })
           .catch((error) => {
-            alert(error);
+            enqueueSnackbar(error, { variant: 'error' });
           });
       }
       await createUser(params)
         .then(() => {
           reset();
           refreshTable();
-          enqueueSnackbar('Create success!');
+          enqueueSnackbar('Create success!', { variant: 'success' });
           onClose();
         })
         .catch((error) => {
-          alert(error?.message, { variant: 'error' });
+          enqueueSnackbar(error?.message, { variant: 'error' });
         });
     } catch (error) {
       console.error(error);

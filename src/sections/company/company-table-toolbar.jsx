@@ -17,7 +17,7 @@ export default function CompanyTableToolbar({ filters, onFilters }) {
 
   const handleFilterName = useCallback(
     (event) => {
-      onFilters('companyName', event.target.value);
+      onFilters('filterValue', event.target.value);
     },
     [onFilters]
   );

@@ -10,11 +10,14 @@ import Typography from '@mui/material/Typography';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { endpoints } from 'src/utils/axios';
+
 import { useAuthContext } from 'src/auth/hooks';
 
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
+import { SERVER_URL } from '../../config-global';
 // ----------------------------------------------------------------------
 
 const OPTIONS = [
@@ -81,7 +84,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={user?.photoURL}
+          src={`${SERVER_URL}${endpoints.user.avatarUrl}/${user?.avatar}`}
           alt={user?.displayName}
           sx={{
             width: 36,

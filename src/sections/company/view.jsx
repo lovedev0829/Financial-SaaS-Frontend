@@ -40,7 +40,7 @@ import {
 
 import CompanyTableRow from './company-table-row';
 import CompanyTableToolbar from './company-table-toolbar';
-import ComapnyQuickCreateForm from './company-quick-create-form';
+import CompanyQuickCreateForm from './company-quick-create-form';
 import CompanyTableFiltersResult from './company-table-filters-result';
 
 const TABLE_HEAD = [
@@ -57,7 +57,7 @@ const TABLE_HEAD = [
 ];
 
 const defaultFilters = {
-  companyName: '',
+  filterValue: '',
   status: 'all',
 };
 
@@ -299,7 +299,7 @@ export default function CompanyView() {
         </Card>
       </Container>
 
-      <ComapnyQuickCreateForm
+      <CompanyQuickCreateForm
         open={quickCreate.value}
         onClose={quickCreate.onFalse}
         refreshTable={() => mutate()}
@@ -332,7 +332,7 @@ export default function CompanyView() {
 }
 
 function applyFilter({ inputData, comparator, filters }) {
-  const { companyName, status } = filters;
+  const { filterValue, status } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index]);
 
@@ -344,9 +344,17 @@ function applyFilter({ inputData, comparator, filters }) {
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (companyName) {
+  if (filterValue) {
     inputData = inputData.filter(
-      (company) => company.company_name.toLowerCase().indexOf(companyName.toLowerCase()) !== -1
+      (company) =>
+        company.company_name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.company_code.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.cnpj.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.institution_type.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.company_address.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.business_email.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.cetip_account_num.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 ||
+        company.created_at.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
     );
   }
 

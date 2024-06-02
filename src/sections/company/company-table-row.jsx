@@ -14,7 +14,7 @@ import Iconify from 'src/components/iconify';
 import { usePopover } from 'src/components/custom-popover';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 
-import ComapnyQuickEditForm from './company-quick-edit-form';
+import CompanyQuickEditForm from './company-quick-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ export default function CompanyTableRow({ row, selected, onSelectRow, onDeleteRo
         </TableCell>
       </TableRow>
 
-      <ComapnyQuickEditForm
+      <CompanyQuickEditForm
         currentCompany={row}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}

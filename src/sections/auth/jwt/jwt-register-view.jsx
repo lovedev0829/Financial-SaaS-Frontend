@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
+import { useMask } from '@react-input/mask';
 import 'react-international-phone/style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -35,10 +36,13 @@ export default function JwtRegisterView() {
   const { register } = useAuthContext();
   const [notification, setNotification] = useState(false);
   const [notificationMessageBox, setNotificationMessageBox] = useState(false);
+
+  const phoneRef = useMask({ mask: '(+__) __ _____-____', replacement: '_' });
+  const cnpjRef = useMask({ mask: '__.___.___/____-__', replacement: '_' });
+
   const router = useRouter();
   const params = useParams();
   const { companyRole } = params;
-
   const defaultValues = {
     firstName: '',
     lastName: '',
@@ -127,6 +131,7 @@ export default function JwtRegisterView() {
                       <PhoneIcon />
                     </InputAdornment>
                   ),
+                  inputRef: phoneRef,
                 }}
               />
             </Stack>
@@ -177,6 +182,7 @@ export default function JwtRegisterView() {
                     <BusinessOutlinedIcon />
                   </InputAdornment>
                 ),
+                inputRef: cnpjRef,
               }}
             />
             <RHFTextField

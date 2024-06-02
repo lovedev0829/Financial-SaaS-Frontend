@@ -80,7 +80,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
             params = { ...params, avatar: res };
           })
           .catch((error) => {
-            alert(error);
+            enqueueSnackbar(error, { variant: 'error' });
           });
       }
       await updateuser(params)
@@ -90,7 +90,7 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
           onClose();
         })
         .catch((error) => {
-          alert(error?.message, { variant: 'error' });
+          enqueueSnackbar(error?.message, { variant: 'error' });
           onClose();
         });
     } catch (error) {

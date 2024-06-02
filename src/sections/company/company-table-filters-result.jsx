@@ -17,7 +17,7 @@ export default function CompanyTableFiltersResult({
   ...other
 }) {
   const handleRemoveKeyword = useCallback(() => {
-    onFilters('name', '');
+    onFilters('filterValue', '');
   }, [onFilters]);
 
   const handleRemoveStatus = useCallback(() => {
