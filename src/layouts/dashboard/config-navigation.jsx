@@ -44,7 +44,7 @@ export function useNavData() {
             roles: ['superAdmin', 'master', 'user', 'admin'],
           },
           {
-            title: 'Analysis and Reports',
+            title: 'Analysis',
             path: paths.dashboard.analysis,
             icon: ICONS.analysis,
             roles: ['superAdmin', 'master', 'user', 'admin'],
@@ -60,14 +60,14 @@ export function useNavData() {
             title: 'Issuance Registration',
             path: paths.dashboard.issuance.register,
             icon: ICONS.issuanceRegister,
-            roles: ['master'],
+            roles: ['master', 'user'],
             companyRoles: ['issuer', 'distributor'],
           },
           {
             title: 'Distributor Registration',
             path: paths.dashboard.distributor.register,
             icon: ICONS.distributorRegister,
-            roles: ['master'],
+            roles: ['master', 'user'],
             companyRoles: ['issuer', 'distributor'],
           },
           {
@@ -87,7 +87,7 @@ export function useNavData() {
             title: 'Issuance Router',
             path: paths.dashboard.issuance.router,
             icon: ICONS.issuanceRrouter,
-            roles: ['master'],
+            roles: ['master', 'user'],
             companyRoles: ['issuer', 'distributor'],
           },
           {
@@ -113,7 +113,7 @@ export function useNavData() {
             title: 'Manage Users',
             path: paths.dashboard.user,
             icon: ICONS.manageUsers,
-            roles: ['master'],
+            roles: ['master', 'admin'],
             companyRoles: ['issuer', 'distributor'],
           },
         ],

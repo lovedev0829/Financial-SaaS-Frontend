@@ -80,9 +80,13 @@ export default function UserQuickCreateForm({
             params = { ...params, avatar: res };
           })
           .catch((error) => {
+            params = { ...params, avatar: 'error' };
             enqueueSnackbar(error, { variant: 'error' });
           });
       }
+
+      if (data.avatarUrl && params.avatar === 'error') return;
+
       await createUser(params)
         .then(() => {
           reset();

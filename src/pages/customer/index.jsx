@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> Analysis And Reports </title>
+        <title> Analysis </title>
       </Helmet>
       <CustomerView />
     </>

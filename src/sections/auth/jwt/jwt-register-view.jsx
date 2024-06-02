@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
 import { useMask } from '@react-input/mask';
+import { useState, useEffect } from 'react';
 import 'react-international-phone/style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,6 +36,7 @@ export default function JwtRegisterView() {
   const { register } = useAuthContext();
   const [notification, setNotification] = useState(false);
   const [notificationMessageBox, setNotificationMessageBox] = useState(false);
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
 
   const phoneRef = useMask({ mask: '(+__) __ _____-____', replacement: '_' });
   const cnpjRef = useMask({ mask: '__.___.___/____-__', replacement: '_' });
@@ -66,6 +67,12 @@ export default function JwtRegisterView() {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    if (!isCaptchaValid) {
+      setNotificationMessageBox('Please verify that you are not a robot.');
+      setNotification(true);
+      return; // Stop the form submission if the CAPTCHA is not checked
+    }
+
     try {
       await register?.({ ...data, companyRole });
       router.push(PATH_AFTER_REGISTER);
@@ -238,7 +245,16 @@ export default function JwtRegisterView() {
             />
           </Stack>
           <Stack sx={{ marginLeft: '1px', marginTop: '20px' }}>
-            <ReCAPTCHA theme="light" sitekey="6LdFP-cpAAAAALlMed_fhe3BKr1iyYRgdS84x24E" />
+            <ReCAPTCHA
+              theme="light"
+              name="captcha"
+              sitekey="6Lcuv-4pAAAAAEsSRaCFXcqskwY2coDiV_vTTFhp"
+              onChange={(value) => {
+                if (value) {
+                  setIsCaptchaValid(true);
+                }
+              }} // handle change event
+            />
           </Stack>
           <Stack
             direction="row"

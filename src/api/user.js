@@ -82,7 +82,6 @@ export function uploadAvatar(file) {
         resolve(res?.data);
       })
       .catch((error) => {
-        console.log('here', error);
         reject(error);
       });
   });

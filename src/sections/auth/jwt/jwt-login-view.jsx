@@ -38,6 +38,7 @@ export default function JwtLoginView() {
   const returnTo = searchParams.get('returnTo');
 
   const password = useBoolean();
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
@@ -61,6 +62,10 @@ export default function JwtLoginView() {
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    if (!isCaptchaValid) {
+      setErrorMsg('Please verify that you are not a robot.');
+      return; // Stop the form submission if the CAPTCHA is not checked
+    }
     try {
       await login?.(data.email, data.password);
 
@@ -101,7 +106,16 @@ export default function JwtLoginView() {
       <Link variant="body2" color="primary" underline="always" sx={{ alignSelf: 'flex-end' }}>
         Forgot password?
       </Link>
-      <ReCAPTCHA sitekey="6LdFP-cpAAAAALlMed_fhe3BKr1iyYRgdS84x24E" />
+      <ReCAPTCHA
+        theme="light"
+        name="captcha"
+        sitekey="6Lcuv-4pAAAAAEsSRaCFXcqskwY2coDiV_vTTFhp"
+        onChange={(value) => {
+          if (value) {
+            setIsCaptchaValid(true);
+          }
+        }} // handle change event
+      />
       <LoadingButton
         fullWidth
         size="large"

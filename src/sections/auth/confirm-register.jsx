@@ -44,6 +44,7 @@ export default function ConfirmRegisterView() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false);
   const methods = useForm({
     resolver: yupResolver(RegisterConfirmSchema),
     defaultValues,
@@ -53,6 +54,10 @@ export default function ConfirmRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     const params = { userId, ...data };
+    if (!isCaptchaValid) {
+      enqueueSnackbar('Please verify that you are not a robot.', { variant: 'error' });
+      return; // Stop the form submission if the CAPTCHA is not checked
+    }
     try {
       await confirmRegistration(params)
         .then((res) => {
@@ -243,7 +248,16 @@ export default function ConfirmRegisterView() {
             />
           </Stack>
           <Stack sx={{ marginLeft: '1px', marginTop: '20px' }}>
-            <ReCAPTCHA theme="light" sitekey="Your client site key" />
+            <ReCAPTCHA
+              theme="light"
+              name="captcha"
+              sitekey="6Lcuv-4pAAAAAEsSRaCFXcqskwY2coDiV_vTTFhp"
+              onChange={(value) => {
+                if (value) {
+                  setIsCaptchaValid(true);
+                }
+              }} // handle change event
+            />
           </Stack>
           <Stack
             direction="row"

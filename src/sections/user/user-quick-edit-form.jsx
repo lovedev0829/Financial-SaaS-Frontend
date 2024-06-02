@@ -80,9 +80,11 @@ export default function UserQuickEditForm({ currentUser, open, onClose, refreshT
             params = { ...params, avatar: res };
           })
           .catch((error) => {
+            params = { ...params, avatar: 'error' };
             enqueueSnackbar(error, { variant: 'error' });
           });
       }
+      if (typeof data?.avatar === 'object' && params.avatar === 'error') return;
       await updateuser(params)
         .then(() => {
           refreshTable();
